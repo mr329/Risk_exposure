@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Supply Chain Risk Explorer — Lendlease</title>
+<title>Supply Chain Risk Explorer — Middle East Conflict</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -338,9 +338,9 @@ body{
 .chip:hover{border-color:var(--navy);color:var(--navy);background:var(--nlt)}
 
 /* SVG viz */
-.viz-w{background:var(--sur);border:1px solid var(--b1);border-radius:8px;padding:18px;margin-bottom:14px;overflow-x:auto}
+.viz-w{background:var(--sur);border:1px solid var(--b1);border-radius:8px;padding:20px;margin-bottom:14px;overflow:auto}
 .viz-ey{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
-svg.fsvg{display:block;width:100%}
+svg.fsvg{display:block;width:100%;height:auto}
 
 /* Route cards */
 .rcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:14px}
@@ -379,7 +379,7 @@ table.ctbl tr:hover td{background:var(--bg)}
 <!-- ══ TOP NAV ══════════════════════════════════════════════ -->
 <div id="topnav">
   <div id="topnav-inner">
-    <div class="nav-brand">Supply Chain Risk Explorer <span>Lendlease · 2026</span></div>
+    <div class="nav-brand">Supply Chain Risk Explorer <span> · 2026</span></div>
     <div class="ntab active" id="nt-home"     onclick="nav('home',this)">⌂ Home</div>
     <div class="ntab"        id="nt-register" onclick="nav('register',this)">◫ Register</div>
     <div class="ntab"        id="nt-mfg"      onclick="nav('mfg',this)">⚙ Methods</div>
@@ -405,9 +405,9 @@ table.ctbl tr:hover td{background:var(--bg)}
   <div class="page active" id="page-home">
     <div class="pinner">
       <div class="l-hero">
-        <div class="l-eye">Lendlease Australia &nbsp;·&nbsp; Indicative study &nbsp;·&nbsp; March 2026</div>
+        <div class="l-eye"> Australia &nbsp;·&nbsp; Indicative study &nbsp;·&nbsp; March 2026</div>
         <h1 class="l-title">Middle East supply chain<br><strong>risk explorer</strong></h1>
-        <p class="l-sub">44 construction sub-products mapped from Lendlease project sites back to their primary global raw material source. Assess Hormuz disruption exposure, understand manufacturing routes, and identify alternative specifications.</p>
+        <p class="l-sub">44 construction sub-products mapped from typical project sites back to their primary global raw material source. Assess Hormuz disruption exposure, understand manufacturing routes, and identify alternative specifications.</p>
         <div class="l-stats">
           <div><div class="snum">44</div><div class="slbl">Sub-products</div></div>
           <div><div class="snum">12</div><div class="slbl">Categories</div></div>
@@ -453,7 +453,7 @@ table.ctbl tr:hover td{background:var(--bg)}
         Mehdi Robati
       </a>
       <span class="cs">·</span>
-      <span class="ct">Technical Manager Embodied Carbon, Lendlease Barangaroo</span>
+      <span class="ct"> Reach out for comments or questions</span>
       <span class="cs">·</span>
       <span class="cd">⚠ Indicative — public data only · Not for contractual decisions</span>
     </div></div>
@@ -472,7 +472,7 @@ table.ctbl tr:hover td{background:var(--bg)}
         Mehdi Robati
       </a>
       <span class="cs">·</span>
-      <span class="ct">Technical Manager Embodied Carbon, Lendlease Barangaroo</span>
+      <span class="ct"> Reach out for any comments or questions</span>
     </div></div>
   </div>
 
@@ -494,7 +494,7 @@ table.ctbl tr:hover td{background:var(--bg)}
         Mehdi Robati
       </a>
       <span class="cs">·</span>
-      <span class="ct">Technical Manager Embodied Carbon, Lendlease Barangaroo</span>
+      <span class="ct">Reach out for any comments or questions</span>
     </div></div>
   </div>
 
@@ -2763,7 +2763,7 @@ function swTab(id,tab,el){
 /* ── Flow diagram ─────────────────────────────────────────── */
 function buildFlow(p){
   const nodes=[
-    {tier:'Lendlease Project',name:'Sydney, Australia',country:'',note:'',risk:null,proj:true},
+    {tier:'AU Project',name:'Sydney, Australia',country:'',note:'',risk:null,proj:true},
     {tier:'Tier 1 — AU Supplier',name:p.t1supplier,country:p.t1country,note:p.t1detail,risk:p.t1risk},
     {tier:'Tier 2 — Component',  name:p.t2supplier,country:p.t2country,note:p.t2detail,risk:p.t2risk},
     {tier:'Tier 3 — Feedstock',  name:p.t3supplier,country:p.t3country,note:p.t3detail,risk:p.t3risk},
@@ -2912,18 +2912,14 @@ function loadMfg(id){
 function buildSVG(m){
   const routes=m.routes;
   const maxSteps=Math.max(...routes.map(r=>r.steps.length));
-  const OW=155,PW=185,CG=14,RG=28,CH=46,AH=20,ROW=CH+AH;
+  const OW=200,PW=250,CG=22,RG=44,CH=76,AH=12,ROW=CH+AH;
   const PW2=OW+CG+PW;
   const totalRows=maxSteps+2;
-  const H=totalRows*ROW+56;
+  const H=totalRows*ROW+80;
   const W=routes.length*PW2+(routes.length-1)*RG+40;
 
-  let s=`<svg class="fsvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-height:660px">
-  <defs>
-    <marker id="arU" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L6,3 Z" fill="#CCCCCC"/>
-    </marker>
-  </defs>`;
+  let s=`<svg class="fsvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <defs></defs>`;
 
   routes.forEach((r,ri)=>{
     const px=20+ri*(PW2+RG);
@@ -2943,9 +2939,9 @@ function buildSVG(m){
     const oc=originNodes.length;
 
     // Route label
-    s+=`<text x="${px+PW2/2}" y="14" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="600" fill="${r.color}">${r.name}</text>`;
-    s+=`<text x="${ox+OW/2}" y="26" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#BBBBBB" letter-spacing="0.5">ORIGIN</text>`;
-    s+=`<text x="${procx+PW/2}" y="26" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#BBBBBB" letter-spacing="0.5">PROCESS</text>`;
+    s+=`<text x="${px+PW2/2}" y="14" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="13" font-weight="600" fill="${r.color}">${r.name}</text>`;
+    s+=`<text x="${ox+OW/2}" y="26" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#BBBBBB" letter-spacing="0.5">ORIGIN</text>`;
+    s+=`<text x="${procx+PW/2}" y="26" text-anchor="middle" font-family="DM Mono,monospace" font-size="8" fill="#BBBBBB" letter-spacing="0.5">PROCESS</text>`;
 
     // Process column (bottom to top)
     procNodes.forEach((n,pi)=>{
@@ -2957,19 +2953,22 @@ function buildSVG(m){
       if(n.isBot){fill=rk.bg;stroke=rk.bd;tc=rk.c;}
       else if(n.isTop){fill='#EBF2FB';stroke='#AACBE8';tc='#1F4E79';}
       s+=`<rect x="${procx}" y="${y}" width="${PW}" height="${CH}" rx="5" fill="${fill}" stroke="${stroke}" stroke-width="1.1"/>`;
-      if(n.label)s+=`<text x="${procx+7}" y="${y+11}" font-family="DM Mono,monospace" font-size="7" fill="${lc}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
+      if(n.label)s+=`<text x="${procx+7}" y="${y+11}" font-family="DM Mono,monospace" font-size="8" fill="${lc}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
       if(n.num){
-        s+=`<circle cx="${procx+12}" cy="${y+28}" r="7.5" fill="#F0F2F5"/>`;
-        s+=`<text x="${procx+12}" y="${y+31.5}" font-family="DM Sans,sans-serif" font-size="7.5" fill="#777" text-anchor="middle" font-weight="600">${n.num}</text>`;
+        s+=`<circle cx="${procx+14}" cy="${y+42}" r="9" fill="#F0F2F5"/>`;
+        s+=`<text x="${procx+14}" y="${y+46}" font-family="DM Sans,sans-serif" font-size="9" fill="#777" text-anchor="middle" font-weight="600">${n.num}</text>`;
       }
-      const tx=n.num?procx+25:procx+7;
-      const ty=n.label?y+28:y+20;
-      const[l1,l2]=wrap(n.text,n.num?26:30);
-      s+=`<text x="${tx}" y="${ty}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}" font-weight="${n.isBot||n.isTop?'600':'400'}">${esv(l1)}</text>`;
-      if(l2)s+=`<text x="${tx}" y="${ty+11}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}">${esv(l2)}</text>`;
+      const tx=n.num?procx+28:procx+8;
+      const ty=n.label?y+42:y+28;
+      const[l1,l2]=wrap(n.text,n.num?28:32);
+      s+=`<text x="${tx}" y="${ty}" font-family="DM Sans,sans-serif" font-size="10" fill="${tc}" font-weight="${n.isBot||n.isTop?'600':'400'}">${esv(l1)}</text>`;
+      if(l2)s+=`<text x="${tx}" y="${ty+11}" font-family="DM Sans,sans-serif" font-size="10" fill="${tc}">${esv(l2)}</text>`;
       if(drow>0){
+        // Draw upward arrow in the gap ABOVE the current card (between this card and the one above)
         const ax=procx+PW/2;
-        s+=`<line x1="${ax}" y1="${y+CH+2}" x2="${ax}" y2="${y+CH+AH-6}" stroke="#CCCCCC" stroke-width="1.1" marker-end="url(#arU)"/>`;
+        const y1=y-4;           // just above top of current card
+        const y2=y-AH+6;        // approaching bottom of card above
+        s+=`<line x1="${ax}" y1="${y1}" x2="${ax}" y2="${y2}" stroke="#CCCCCC" stroke-width="1.1"/>`;
       }
     });
 
@@ -2983,10 +2982,10 @@ function buildSVG(m){
       if(n.isRaw){fill=rk.bg;stroke=rk.bd;tc=rk.c;}
       else if(n.isAU){fill='#EAFAF1';stroke='#A9DFBF';tc='#1E8449';}
       s+=`<rect x="${ox}" y="${y}" width="${OW}" height="${CH}" rx="5" fill="${fill}" stroke="${stroke}" stroke-width="1.1"/>`;
-      if(n.label)s+=`<text x="${ox+7}" y="${y+11}" font-family="DM Mono,monospace" font-size="7" fill="${lc}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
+      if(n.label)s+=`<text x="${ox+7}" y="${y+11}" font-family="DM Mono,monospace" font-size="8" fill="${lc}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
       const[l1,l2]=wrap(n.text,22);
-      s+=`<text x="${ox+7}" y="${y+26}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}" font-weight="500">${esv(l1)}</text>`;
-      if(l2)s+=`<text x="${ox+7}" y="${y+37}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}">${esv(l2)}</text>`;
+      s+=`<text x="${ox+8}" y="${y+36}" font-family="DM Sans,sans-serif" font-size="10" fill="${tc}" font-weight="500">${esv(l1)}</text>`;
+      if(l2)s+=`<text x="${ox+8}" y="${y+50}" font-family="DM Sans,sans-serif" font-size="10" fill="${tc}">${esv(l2)}</text>`;
       if(oi<oc-1){
         const nextY=32+(oi+1)*(usableH/(oc-1));
         s+=`<line x1="${ox+OW/2}" y1="${y+CH+2}" x2="${ox+OW/2}" y2="${nextY-2}" stroke="#DDDDDD" stroke-width="1" stroke-dasharray="3,3"/>`;
