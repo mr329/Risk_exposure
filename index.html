@@ -7,503 +7,383 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ─────────────────────────────────────────────
-   DESIGN TOKENS
-───────────────────────────────────────────── */
+/* ── TOKENS ─────────────────────────────────────────────── */
 :root {
-  --bg:       #FAFAFA;
-  --surface:  #FFFFFF;
-  --border:   #EBEBEB;
-  --border2:  #D8D8D8;
-  --text-1:   #111111;
-  --text-2:   #555555;
-  --text-3:   #999999;
-  --navy:     #1F4E79;
-  --navy-lt:  #EBF2FB;
+  --bg:     #FAFAFA;
+  --sur:    #FFFFFF;
+  --b1:     #EBEBEB;
+  --b2:     #D8D8D8;
+  --t1:     #111111;
+  --t2:     #555555;
+  --t3:     #999999;
+  --navy:   #1F4E79;
+  --nlt:    #EBF2FB;
 
-  /* Risk — used ONLY where meaning is conveyed */
-  --rc:  #C0392B;   --bc: #FDEDEC;   /* Critical    */
-  --rs:  #D35400;   --bs: #FEF0E7;   /* Significant */
-  --rm:  #9A7D0A;   --bm: #FEFBE8;   /* Moderate    */
-  --rl:  #1E8449;   --bl: #EAFAF1;   /* Low         */
-  --rn:  #2471A3;   --bn: #EBF5FB;   /* Negligible  */
-
-  --radius:   8px;
-  --radius-sm:5px;
-  --shadow:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+  --rc: #C0392B; --bc: #FDEDEC; --bdc: #F5C6C2;
+  --rs: #D35400; --bs: #FEF0E7; --bds: #F5C7A1;
+  --rm: #9A7D0A; --bm: #FEFBE8; --bdm: #EDE890;
+  --rl: #1E8449; --bl: #EAFAF1; --bdl: #A9DFBF;
+  --rn: #2471A3; --bn: #EBF5FB; --bdn: #AED6F1;
 }
 
-/* ─────────────────────────────────────────────
-   BASE
-───────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  padding-bottom: 56px; /* bottom nav height */
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text-1);
-  font-size: 13px;
-  line-height: 1.5;
-  min-height: 100vh;
+/* ── RESET ──────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;overflow:hidden}
+body{
+  height:100%;overflow:hidden;
+  display:flex;flex-direction:column;
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--t1);
+  font-size:13px;line-height:1.5;
 }
-.mono { font-family: 'DM Mono', monospace; }
+.mono{font-family:'DM Mono',monospace}
 
-/* ─────────────────────────────────────────────
-   NAV
-───────────────────────────────────────────── */
-#nav {
-  position: sticky; top: 0; z-index: 200;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px);
+/* ── TOP NAV ────────────────────────────────────────────── */
+#topnav{
+  flex-shrink:0;
+  background:var(--sur);border-bottom:1px solid var(--b1);
+  z-index:100;
 }
-#nav-inner {
-  max-width: 1320px; margin: 0 auto;
-  padding: 0 20px;
-  display: flex; align-items: center; gap: 0;
-  height: 52px;
+#topnav-inner{
+  max-width:1320px;margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;height:52px;gap:4px;
 }
-.nav-brand {
-  font-size: 13px; font-weight: 600; color: var(--navy);
-  margin-right: 28px; white-space: nowrap; letter-spacing: -.01em;
+.nav-brand{
+  font-size:13px;font-weight:600;color:var(--navy);
+  margin-right:20px;white-space:nowrap;letter-spacing:-.01em;
 }
-.nav-brand span { color: var(--text-3); font-weight: 400; margin-left: 4px; font-size: 11px; }
-.nav-tab {
-  height: 52px; padding: 0 14px;
-  display: flex; align-items: center;
-  font-size: 12px; font-weight: 500; color: var(--text-3);
-  cursor: pointer; border-bottom: 2px solid transparent;
-  transition: color .15s; white-space: nowrap; gap: 6px;
+.nav-brand span{color:var(--t3);font-weight:400;font-size:11px;margin-left:4px}
+.ntab{
+  height:52px;padding:0 14px;
+  display:flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:500;color:var(--t3);
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:color .15s;white-space:nowrap;
 }
-.nav-tab:hover { color: var(--text-1); }
-.nav-tab.active { color: var(--navy); border-bottom-color: var(--navy); }
-.nav-tab .tab-icon { font-size: 13px; }
-#nav-controls {
-  margin-left: auto; display: flex; align-items: center; gap: 8px;
+.ntab:hover{color:var(--t1)}
+.ntab.active{color:var(--navy);border-bottom-color:var(--navy)}
+#nav-right{
+  margin-left:auto;display:flex;align-items:center;gap:8px;
 }
-#nav-controls input[type=search] {
-  width: 176px; height: 32px; padding: 0 10px 0 30px;
-  border: 1px solid var(--border2); border-radius: 6px;
-  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 9px center;
-  font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-1);
-  outline: none; transition: border-color .15s;
+#nav-right input[type=search]{
+  width:170px;height:32px;padding:0 10px 0 30px;
+  border:1px solid var(--b2);border-radius:6px;
+  background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 9px center;
+  font-family:'DM Sans',sans-serif;font-size:12px;color:var(--t1);
+  outline:none;transition:border-color .15s;
 }
-#nav-controls input[type=search]:focus { border-color: var(--navy); }
-#nav-controls input::placeholder { color: var(--text-3); }
-#nav-controls select {
-  height: 32px; padding: 0 8px;
-  border: 1px solid var(--border2); border-radius: 6px;
-  background: var(--bg); font-family: 'DM Sans', sans-serif;
-  font-size: 12px; color: var(--text-1); cursor: pointer; outline: none;
+#nav-right input:focus{border-color:var(--navy)}
+#nav-right input::placeholder{color:var(--t3)}
+#nav-right select{
+  height:32px;padding:0 8px;
+  border:1px solid var(--b2);border-radius:6px;
+  background:var(--bg);font-family:'DM Sans',sans-serif;
+  font-size:12px;color:var(--t1);cursor:pointer;outline:none;
 }
-.count-pill {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px; color: var(--text-3);
-  background: var(--bg); border: 1px solid var(--border);
-  padding: 3px 9px; border-radius: 20px; white-space: nowrap;
+.cpill{
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--t3);
+  background:var(--bg);border:1px solid var(--b1);
+  padding:3px 9px;border-radius:20px;white-space:nowrap;
 }
 
-/* ─────────────────────────────────────────────
-   PAGES
-───────────────────────────────────────────── */
-.page { display: none; }
-.page.active { display: block; }
-.page-inner { max-width: 1320px; margin: 0 auto; padding: 24px 20px 60px; }
-
-/* ─────────────────────────────────────────────
-   ZONE SECTIONS
-───────────────────────────────────────────── */
-.zone { margin-bottom: 12px; }
-.zone-trigger {
-  width: 100%; display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; border-radius: var(--radius);
-  background: var(--surface); border: 1px solid var(--border);
-  cursor: pointer; text-align: left; transition: border-color .15s;
-}
-.zone-trigger:hover { border-color: var(--border2); }
-.zone-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.zone-name { font-size: 12px; font-weight: 600; color: var(--text-1); }
-.zone-sub  { font-size: 11px; color: var(--text-3); margin-left: 2px; }
-.zone-count { margin-left: auto; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); }
-.zone-chev { font-size: 10px; color: var(--text-3); transition: transform .2s; }
-.zone-chev.open { transform: rotate(90deg); }
-.zone-body { padding-bottom: 56px; /* bottom nav height */
- display: none; padding: 10px 0 0; }
-.zone-body.open { display: block; }
-
-/* ─────────────────────────────────────────────
-   CARDS GRID
-───────────────────────────────────────────── */
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 8px; }
-
-/* ─────────────────────────────────────────────
-   PRODUCT CARD
-───────────────────────────────────────────── */
-.card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); cursor: pointer;
-  transition: box-shadow .15s, border-color .15s;
-  overflow: hidden;
-}
-.card:hover { box-shadow: var(--shadow-md); border-color: var(--border2); }
-.card.open { border-color: var(--navy); }
-.card-top { padding: 12px 14px 10px; display: flex; align-items: flex-start; gap: 10px; }
-.c-rank { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-3); width: 18px; flex-shrink: 0; padding-top: 2px; }
-.c-body { padding-bottom: 56px; /* bottom nav height */
- flex: 1; min-width: 0; }
-.c-name { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 1px; letter-spacing: -.01em; }
-.c-cat  { font-size: 10px; color: var(--text-3); }
-.c-risk { flex-shrink: 0; }
-
-/* Risk badge — colour used intentionally here */
-.risk-badge {
-  display: inline-flex; align-items: center; gap: 3px;
-  font-size: 9px; font-weight: 600; font-family: 'DM Mono', monospace;
-  padding: 2px 7px; border-radius: 4px; white-space: nowrap;
-  letter-spacing: .02em;
-}
-.card-meta {
-  padding: 0 14px 10px; display: flex; gap: 5px; flex-wrap: wrap;
-}
-.meta-tag {
-  font-size: 10px; color: var(--text-2); background: var(--bg);
-  border: 1px solid var(--border); padding: 2px 7px;
-  border-radius: 4px; white-space: nowrap;
+/* ── PAGE VIEWPORT ──────────────────────────────────────── */
+#viewport{
+  flex:1;overflow:hidden;position:relative;
 }
 
-/* ─────────────────────────────────────────────
-   EXPANDED CARD DETAIL
-───────────────────────────────────────────── */
-.card-detail { display: none; border-top: 1px solid var(--border); }
-.card-detail.open { display: block; }
-
-/* Vertical flow diagram */
-.flow-wrap { padding: 14px; background: var(--bg); }
-.flow-eyebrow { font-size: 9px; font-weight: 500; color: var(--text-3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
-.flow-nodes { display: flex; flex-direction: column; gap: 0; }
-.flow-node {
-  padding: 9px 11px; border-radius: var(--radius-sm);
-  border: 1px solid var(--border); background: var(--surface);
-  position: relative;
+/* ── PAGES ──────────────────────────────────────────────── */
+.page{
+  position:absolute;inset:0;
+  overflow-y:auto;overflow-x:hidden;
+  display:none;flex-direction:column;
+  -webkit-overflow-scrolling:touch;
 }
-.flow-node.project { background: var(--navy-lt); border-color: #AACBE8; }
-.fn-tier { font-size: 9px; font-weight: 500; color: var(--text-3); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 3px; }
-.fn-name { font-size: 11px; font-weight: 600; color: var(--text-1); line-height: 1.35; }
-.fn-country { font-size: 10px; color: var(--text-3); margin-top: 2px; }
-.fn-note { font-size: 10px; color: var(--text-2); margin-top: 3px; line-height: 1.45; }
-.fn-risk { margin-top: 5px; }
-.flow-arrow { text-align: center; font-size: 10px; color: var(--border2); line-height: 1; padding: 3px 0; }
+.page.active{display:flex}
+.pinner{
+  max-width:1320px;margin:0 auto;
+  padding:24px 20px 20px;width:100%;flex:1;
+}
+
+/* ── BOTTOM NAV ─────────────────────────────────────────── */
+#botnav{
+  flex-shrink:0;
+  background:var(--sur);border-top:1px solid var(--b1);
+  box-shadow:0 -2px 12px rgba(0,0,0,.05);
+  display:flex;justify-content:center;
+}
+#botnav-inner{display:flex;max-width:420px;width:100%}
+.bnav{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px;
+  padding:8px 4px 6px;cursor:pointer;
+  border:none;background:none;font-family:'DM Sans',sans-serif;
+  color:var(--t3);border-top:2px solid transparent;
+  transition:color .15s;
+}
+.bnav:hover{color:var(--t1)}
+.bnav.active{color:var(--navy);border-top-color:var(--navy)}
+.bi{font-size:17px;line-height:1}
+.bl{font-size:9px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+
+/* ── CREDIT BAR ─────────────────────────────────────────── */
+.cbar{
+  background:var(--sur);border-top:1px solid var(--b1);
+  padding:10px 20px;flex-shrink:0;
+}
+.cbar-inner{
+  max-width:1320px;margin:0 auto;
+  display:flex;align-items:center;flex-wrap:wrap;gap:5px;
+}
+.ct{font-size:11px;color:var(--t3)}
+.cl{
+  font-size:11px;font-weight:500;color:var(--navy);
+  text-decoration:none;display:inline-flex;align-items:center;gap:4px;
+}
+.cl:hover{text-decoration:underline}
+.cs{color:var(--b2);font-size:11px}
+.cd{font-size:10px;color:var(--t3)}
+
+/* ════════════════════════════════════════════════════════
+   LANDING PAGE
+════════════════════════════════════════════════════════ */
+.l-hero{
+  min-height:calc(100vh - 52px - 46px - 80px);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:48px 0 40px;
+}
+.l-eye{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.12em;color:var(--t3);
+  text-transform:uppercase;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.l-eye::before{content:'';display:block;width:24px;height:1px;background:var(--t3)}
+.l-title{
+  font-size:clamp(30px,5vw,54px);font-weight:300;
+  color:var(--t1);line-height:1.1;letter-spacing:-.03em;
+  margin-bottom:18px;max-width:780px;
+}
+.l-title strong{font-weight:600}
+.l-sub{
+  font-size:14px;color:var(--t2);font-weight:300;
+  line-height:1.7;max-width:520px;margin-bottom:36px;
+}
+.l-stats{display:flex;gap:32px;margin-bottom:40px;flex-wrap:wrap}
+.snum{
+  font-family:'DM Mono',monospace;
+  font-size:26px;font-weight:400;color:var(--t1);
+  letter-spacing:-.02em;line-height:1;
+}
+.slbl{font-size:10px;color:var(--t3);margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
+.l-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}
+.btnp{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  color:#fff;background:var(--navy);
+  padding:10px 20px;border-radius:7px;border:none;
+  cursor:pointer;transition:opacity .15s;
+}
+.btnp:hover{opacity:.87}
+.btns{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  color:var(--t1);background:var(--sur);
+  padding:10px 20px;border-radius:7px;
+  border:1px solid var(--b2);cursor:pointer;transition:border-color .15s;
+}
+.btns:hover{border-color:var(--navy);color:var(--navy)}
+.l-cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:10px;max-width:900px;
+}
+.lcard{
+  background:var(--sur);border:1px solid var(--b1);
+  border-radius:8px;padding:16px;cursor:pointer;
+  transition:box-shadow .15s,border-color .15s;
+}
+.lcard:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:var(--b2)}
+.lcard-ic{font-size:20px;margin-bottom:8px}
+.lcard-t{font-size:12px;font-weight:600;color:var(--t1);margin-bottom:3px}
+.lcard-d{font-size:11px;color:var(--t3);line-height:1.5}
+.l-dis{
+  margin-top:32px;padding:10px 14px;
+  background:var(--bg);border:1px solid var(--b1);
+  border-radius:8px;display:flex;gap:8px;align-items:flex-start;
+}
+.l-dis p{font-size:10px;color:var(--t3);line-height:1.6}
+
+/* ════════════════════════════════════════════════════════
+   REGISTER PAGE
+════════════════════════════════════════════════════════ */
+.zone{margin-bottom:10px}
+.ztrig{
+  width:100%;display:flex;align-items:center;gap:8px;
+  padding:9px 14px;border-radius:8px;
+  background:var(--sur);border:1px solid var(--b1);
+  cursor:pointer;text-align:left;transition:border-color .15s;
+}
+.ztrig:hover{border-color:var(--b2)}
+.zdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.zname{font-size:12px;font-weight:600;color:var(--t1)}
+.zsub{font-size:11px;color:var(--t3);margin-left:1px}
+.zcnt{margin-left:auto;font-family:'DM Mono',monospace;font-size:10px;color:var(--t3)}
+.zchev{font-size:10px;color:var(--t3);transition:transform .2s}
+.zchev.open{transform:rotate(90deg)}
+.zbody{display:none;padding:8px 0 0}
+.zbody.open{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:8px}
+
+/* Card */
+.card{
+  background:var(--sur);border:1px solid var(--b1);
+  border-radius:8px;cursor:pointer;overflow:hidden;
+  transition:box-shadow .15s,border-color .15s;
+}
+.card:hover{box-shadow:0 2px 10px rgba(0,0,0,.09);border-color:var(--b2)}
+.card.open{border-color:var(--navy)}
+.ctop{padding:11px 13px 9px;display:flex;align-items:flex-start;gap:8px}
+.crnk{font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);width:18px;flex-shrink:0;padding-top:1px}
+.cbod{flex:1;min-width:0}
+.cnm{font-size:12px;font-weight:600;color:var(--t1);margin-bottom:1px;letter-spacing:-.01em}
+.ccat{font-size:10px;color:var(--t3)}
+.cmeta{padding:0 13px 9px;display:flex;gap:4px;flex-wrap:wrap}
+.mtag{font-size:10px;color:var(--t2);background:var(--bg);border:1px solid var(--b1);padding:2px 6px;border-radius:4px}
+.rbdg{
+  font-size:9px;font-weight:600;font-family:'DM Mono',monospace;
+  padding:2px 7px;border-radius:4px;white-space:nowrap;
+}
+
+/* Expanded detail */
+.cexp{display:none;border-top:1px solid var(--b1)}
+.cexp.open{display:block}
+
+/* Flow */
+.flow-w{padding:13px;background:var(--bg)}
+.flow-ey{font-size:9px;font-weight:500;color:var(--t3);letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px}
+.fn{padding:8px 10px;border-radius:5px;border:1px solid var(--b1);background:var(--sur)}
+.fn-proj{background:var(--nlt);border-color:#AACBE8}
+.fn-ti{font-size:8px;font-weight:500;color:var(--t3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.fn-nm{font-size:11px;font-weight:600;color:var(--t1);line-height:1.3}
+.fn-co{font-size:9px;color:var(--t3);margin-top:2px}
+.fn-nt{font-size:10px;color:var(--t2);margin-top:3px;line-height:1.45}
+.farr{text-align:center;color:var(--b2);font-size:12px;line-height:1;padding:2px 0}
 
 /* Tabs */
-.detail-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 14px; background: var(--surface); }
-.d-tab { padding: 8px 10px; font-size: 11px; font-weight: 500; color: var(--text-3); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s; }
-.d-tab:hover { color: var(--text-1); }
-.d-tab.active { color: var(--navy); border-bottom-color: var(--navy); }
-.d-panel { display: none; padding: 14px; }
-.d-panel.active { display: block; }
+.dtabs{display:flex;border-bottom:1px solid var(--b1);padding:0 13px;background:var(--sur)}
+.dtab{padding:7px 9px;font-size:11px;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s}
+.dtab:hover{color:var(--t1)}
+.dtab.active{color:var(--navy);border-bottom-color:var(--navy)}
+.dpnl{display:none;padding:13px}
+.dpnl.active{display:block}
 
-.info-block { margin-bottom: 12px; }
-.info-label { font-size: 9px; font-weight: 500; color: var(--text-3); letter-spacing: .07em; text-transform: uppercase; margin-bottom: 4px; }
-.info-val { font-size: 11px; color: var(--text-2); line-height: 1.6; }
-.tier-block {
-  padding: 10px 12px; border-radius: var(--radius-sm);
-  border-left: 3px solid var(--border2); margin-bottom: 8px; background: var(--bg);
+/* Info blocks */
+.ib{margin-bottom:10px}
+.il{font-size:9px;font-weight:500;color:var(--t3);letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.iv{font-size:11px;color:var(--t2);line-height:1.6}
+.tblk{padding:9px 11px;border-radius:5px;border-left:3px solid var(--b2);margin-bottom:7px;background:var(--bg)}
+.tnm{font-size:11px;font-weight:600;color:var(--t1);margin-bottom:1px}
+.tco{font-size:10px;color:var(--t3);margin-bottom:3px}
+.tnt{font-size:10px;color:var(--t2);line-height:1.5;margin-top:3px}
+.altb{padding:9px 11px;border-left:3px solid var(--navy);background:var(--nlt);border-radius:0 5px 5px 0;margin-bottom:7px}
+.conb{padding:9px 11px;border-left:3px solid var(--rs);background:var(--bs);border-radius:0 5px 5px 0}
+.mfgbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:500;color:var(--navy);
+  background:var(--nlt);border:1px solid #AACBE8;
+  padding:5px 11px;border-radius:5px;cursor:pointer;
+  margin-top:9px;transition:background .15s;
 }
-.t-name { font-size: 11px; font-weight: 600; color: var(--text-1); }
-.t-country { font-size: 10px; color: var(--text-3); margin: 1px 0 4px; }
-.t-note { font-size: 10px; color: var(--text-2); line-height: 1.5; }
-.alt-block { padding: 10px 12px; border-left: 3px solid var(--navy); background: var(--navy-lt); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-bottom: 8px; }
-.con-block { padding: 10px 12px; border-left: 3px solid #D35400; background: var(--bs); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
-.go-mfg-btn {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 500; color: var(--navy);
-  background: var(--navy-lt); border: 1px solid #AACBE8;
-  padding: 5px 11px; border-radius: var(--radius-sm);
-  cursor: pointer; margin-top: 10px; transition: background .15s;
-}
-.go-mfg-btn:hover { background: #D6E8F7; }
+.mfgbtn:hover{background:#D6E8F7}
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════════════════════
    MFG PAGE
-───────────────────────────────────────────── */
-.mfg-layout { display: flex; gap: 20px; align-items: flex-start; }
-.mfg-sidebar {
-  width: 172px; flex-shrink: 0;
-  position: sticky; top: 68px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden;
+════════════════════════════════════════════════════════ */
+.mlay{display:flex;gap:18px;align-items:flex-start}
+.msidebar{
+  width:168px;flex-shrink:0;
+  position:sticky;top:16px;
+  background:var(--sur);border:1px solid var(--b1);
+  border-radius:8px;overflow:hidden;
 }
-.mfg-sidebar-title { padding: 10px 12px; font-size: 9px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); border-bottom: 1px solid var(--border); }
-.mfg-nav-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 9px 12px; cursor: pointer;
-  border-bottom: 1px solid var(--border); transition: background .12s;
+.msidebar-t{padding:9px 12px;font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--b1)}
+.mni{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 12px;cursor:pointer;
+  border-bottom:1px solid var(--b1);transition:background .12s;
 }
-.mfg-nav-item:last-child { border-bottom: none; }
-.mfg-nav-item:hover { background: var(--bg); }
-.mfg-nav-item.active { background: var(--navy-lt); }
-.mfg-nav-item.active .mni-name { color: var(--navy); }
-.mni-icon { font-size: 15px; }
-.mni-name { font-size: 11px; font-weight: 600; color: var(--text-1); }
-.mni-sub  { font-size: 9px; color: var(--text-3); margin-top: 1px; }
+.mni:last-child{border-bottom:none}
+.mni:hover{background:var(--bg)}
+.mni.active{background:var(--nlt)}
+.mni.active .mni-n{color:var(--navy)}
+.mni-ic{font-size:14px}
+.mni-n{font-size:11px;font-weight:600;color:var(--t1)}
+.mni-s{font-size:9px;color:var(--t3);margin-top:1px}
+.mcontent{flex:1;min-width:0}
 
-/* MFG content area */
-.mfg-content { flex: 1; min-width: 0; }
-.mfg-hero {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px;
-}
-.mfg-hero-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-.mfg-icon-big { font-size: 28px; }
-.mfg-title { font-size: 20px; font-weight: 600; color: var(--text-1); letter-spacing: -.02em; }
-.mfg-tagline { font-size: 11px; color: var(--text-3); margin-top: 2px; font-family: 'DM Mono', monospace; }
-.me-banner {
-  display: flex; gap: 8px; align-items: flex-start;
-  padding: 8px 12px; border-radius: var(--radius-sm);
-  border: 1px solid #FACAC8; background: #FEF7F7; margin-bottom: 6px;
-}
-.me-banner .meb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rc); flex-shrink: 0; margin-top: 4px; }
-.me-banner p { font-size: 10px; color: #7B241C; line-height: 1.55; }
-.au-banner {
-  display: flex; gap: 8px; align-items: flex-start;
-  padding: 8px 12px; border-radius: var(--radius-sm);
-  border: 1px solid #AACBE8; background: var(--navy-lt); margin-bottom: 8px;
-}
-.au-banner .meb-dot { background: var(--navy); width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
-.au-banner p { font-size: 10px; color: #1A3A5C; line-height: 1.55; }
-.linked-label { font-size: 9px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); margin-bottom: 5px; }
-.linked-chips { display: flex; flex-wrap: wrap; gap: 4px; }
-.lchip {
-  font-size: 10px; color: var(--text-2); background: var(--bg);
-  border: 1px solid var(--border); padding: 3px 8px;
-  border-radius: 4px; cursor: pointer; transition: all .12s;
-}
-.lchip:hover { border-color: var(--navy); color: var(--navy); background: var(--navy-lt); }
+/* MFG hero */
+.mhero{background:var(--sur);border:1px solid var(--b1);border-radius:8px;padding:16px 18px;margin-bottom:14px}
+.mhero-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+.mic-big{font-size:26px}
+.mtitle{font-size:18px;font-weight:600;color:var(--t1);letter-spacing:-.02em}
+.mtagline{font-size:11px;color:var(--t3);margin-top:2px;font-family:'DM Mono',monospace}
+.meb{display:flex;gap:8px;align-items:flex-start;padding:8px 11px;border-radius:5px;margin-bottom:5px}
+.meb-me{border:1px solid #FACAC8;background:#FEF7F7}
+.meb-au{border:1px solid #AACBE8;background:var(--nlt)}
+.meb-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.meb p{font-size:10px;line-height:1.55}
+.lnkd-l{font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:4px;margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:3px}
+.chip{font-size:10px;color:var(--t2);background:var(--bg);border:1px solid var(--b1);padding:2px 7px;border-radius:4px;cursor:pointer;transition:all .12s}
+.chip:hover{border-color:var(--navy);color:var(--navy);background:var(--nlt)}
 
-/* SVG visualisation */
-.mfg-viz-wrap {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
-  overflow: auto;
-}
-.viz-eyebrow { font-size: 9px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
-.viz-route-label { font-size: 10px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; margin-top: 14px; }
-.viz-route-label:first-of-type { margin-top: 0; }
-svg.flow-svg { display: block; width: 100%; }
+/* SVG viz */
+.viz-w{background:var(--sur);border:1px solid var(--b1);border-radius:8px;padding:18px;margin-bottom:14px;overflow-x:auto}
+.viz-ey{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
+svg.fsvg{display:block;width:100%}
 
-/* Route cards grid */
-.routes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 10px; margin-bottom: 16px; }
-.route-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden;
-}
-.rc-header { padding: 12px 14px 10px; border-bottom: 1px solid var(--border); }
-.rc-top { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
-.rc-name { font-size: 13px; font-weight: 600; color: var(--text-1); letter-spacing: -.01em; }
-.rc-dominant { font-size: 9px; font-weight: 600; font-family: 'DM Mono', monospace; padding: 2px 6px; border-radius: 3px; margin-left: auto; flex-shrink: 0; }
-.rc-full { font-size: 10px; color: var(--text-3); }
-.rc-body { padding-bottom: 56px; /* bottom nav height */
- padding: 12px 14px; }
-.rf-section { margin-bottom: 10px; }
-.rf-label { font-size: 9px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); margin-bottom: 4px; }
-.rf-chips { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 3px; }
-.rf-chip { font-size: 9px; color: var(--text-2); background: var(--bg); border: 1px solid var(--border); padding: 1px 6px; border-radius: 3px; }
-.rf-steps { }
-.rf-step { display: flex; gap: 7px; margin-bottom: 5px; align-items: flex-start; }
-.rf-step-n { width: 16px; height: 16px; border-radius: 50%; background: var(--border); color: var(--text-2); font-size: 8px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.rf-step-t { font-size: 10px; color: var(--text-2); line-height: 1.45; }
-.rf-val { font-size: 10px; color: var(--text-2); line-height: 1.5; }
-.me-flag { font-size: 10px; padding: 4px 8px; border-radius: 4px; line-height: 1.5; margin-top: 2px; display: inline-block; }
+/* Route cards */
+.rcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-bottom:14px}
+.rcard{background:var(--sur);border:1px solid var(--b1);border-radius:8px;overflow:hidden}
+.rcard-h{padding:11px 13px 9px;border-bottom:1px solid var(--b1)}
+.rcard-top{display:flex;align-items:flex-start;gap:6px;margin-bottom:3px}
+.rcard-n{font-size:13px;font-weight:600}
+.rcard-dom{font-size:9px;font-weight:600;font-family:'DM Mono',monospace;padding:2px 6px;border-radius:3px;margin-left:auto;flex-shrink:0}
+.rcard-f{font-size:10px;color:var(--t3)}
+.rcard-b{padding:11px 13px}
+.rf{margin-bottom:9px}
+.rl2{font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:3px}
+.rchips{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:2px}
+.rchip{font-size:9px;color:var(--t2);background:var(--bg);border:1px solid var(--b1);padding:1px 6px;border-radius:3px}
+.rstep{display:flex;gap:6px;margin-bottom:4px;align-items:flex-start}
+.rsn{width:15px;height:15px;border-radius:50%;background:#F0F2F5;color:var(--t2);font-size:7.5px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rst{font-size:10px;color:var(--t2);line-height:1.45}
+.rv{font-size:10px;color:var(--t2);line-height:1.5}
+.meflag{font-size:10px;padding:3px 8px;border-radius:4px;line-height:1.5;display:inline-block;margin-top:2px}
 
 /* Comparison table */
-.comp-wrap {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden; margin-bottom: 16px;
-}
-.comp-title { padding: 10px 14px; font-size: 9px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); border-bottom: 1px solid var(--border); }
-table.comp { width: 100%; border-collapse: collapse; font-size: 11px; }
-table.comp th { padding: 8px 12px; text-align: left; font-size: 10px; font-weight: 600; color: var(--text-2); background: var(--bg); border-bottom: 1px solid var(--border); }
-table.comp td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-2); vertical-align: top; line-height: 1.45; }
-table.comp tr:last-child td { border-bottom: none; }
-table.comp td:first-child { font-weight: 500; color: var(--text-1); width: 130px; }
-table.comp tr:hover td { background: var(--bg); }
+.ctbl-w{background:var(--sur);border:1px solid var(--b1);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.ctbl-t{padding:9px 13px;font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);border-bottom:1px solid var(--b1)}
+table.ctbl{width:100%;border-collapse:collapse;font-size:11px}
+table.ctbl th{padding:7px 11px;text-align:left;font-size:10px;font-weight:600;color:var(--t2);background:var(--bg);border-bottom:1px solid var(--b1)}
+table.ctbl td{padding:7px 11px;border-bottom:1px solid var(--b1);color:var(--t2);vertical-align:top;line-height:1.45}
+table.ctbl tr:last-child td{border-bottom:none}
+table.ctbl td:first-child{font-weight:500;color:var(--t1);width:130px}
+table.ctbl tr:hover td{background:var(--bg)}
 
-/* ─────────────────────────────────────────────
-   EMPTY STATE
-───────────────────────────────────────────── */
-#empty { display: none; text-align: center; padding: 60px 20px; color: var(--text-3); font-size: 12px; }
-
-/* ─────────────────────────────────────────────
-   FOOTER DISCLAIMER
-───────────────────────────────────────────── */
-#footer { border-top: 1px solid var(--border); padding: 10px 20px; font-size: 9px; color: var(--text-3); background: var(--surface); line-height: 1.6; }
-
-
-
-/* ─────────────────────────────────────────────
-   LANDING PAGE
-───────────────────────────────────────────── */
-#page-landing {
-  display: block; /* shown by default */
-}
-.landing-hero {
-  min-height: calc(100vh - 52px - 56px);
-  display: flex; flex-direction: column; justify-content: center;
-  align-items: flex-start;
-  max-width: 1320px; margin: 0 auto; padding: 60px 20px 80px;
-}
-.landing-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: .12em; color: var(--text-3);
-  text-transform: uppercase; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px;
-}
-.landing-eyebrow::before {
-  content: ''; display: block; width: 24px; height: 1px; background: var(--text-3);
-}
-.landing-title {
-  font-size: clamp(32px, 5vw, 58px);
-  font-weight: 300; color: var(--text-1);
-  line-height: 1.1; letter-spacing: -.03em;
-  margin-bottom: 20px; max-width: 820px;
-}
-.landing-title strong {
-  font-weight: 600;
-}
-.landing-sub {
-  font-size: 15px; color: var(--text-2); font-weight: 300;
-  line-height: 1.7; max-width: 560px; margin-bottom: 40px;
-}
-.landing-stats {
-  display: flex; gap: 32px; margin-bottom: 48px; flex-wrap: wrap;
-}
-.stat-item { }
-.stat-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 28px; font-weight: 400; color: var(--text-1);
-  letter-spacing: -.02em; line-height: 1;
-}
-.stat-label {
-  font-size: 10px; color: var(--text-3); margin-top: 4px;
-  text-transform: uppercase; letter-spacing: .06em;
-}
-.landing-actions {
-  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 64px;
-}
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
-  color: #fff; background: var(--navy);
-  padding: 11px 22px; border-radius: 7px; border: none;
-  cursor: pointer; transition: opacity .15s; text-decoration: none;
-}
-.btn-primary:hover { opacity: .88; }
-.btn-secondary {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
-  color: var(--text-1); background: var(--surface);
-  padding: 11px 22px; border-radius: 7px;
-  border: 1px solid var(--border2); cursor: pointer;
-  transition: border-color .15s; text-decoration: none;
-}
-.btn-secondary:hover { border-color: var(--navy); color: var(--navy); }
-.landing-cards {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px; width: 100%; max-width: 820px;
-}
-.lcard {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px;
-  cursor: pointer; transition: box-shadow .15s, border-color .15s;
-}
-.lcard:hover { box-shadow: var(--shadow-md); border-color: var(--border2); }
-.lcard-icon { font-size: 20px; margin-bottom: 10px; }
-.lcard-title { font-size: 13px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
-.lcard-desc { font-size: 11px; color: var(--text-3); line-height: 1.55; }
-
-/* Divider line on landing */
-.landing-divider {
-  width: 100%; max-width: 1320px; margin: 0 auto;
-  border: none; border-top: 1px solid var(--border);
-}
-
-/* Disclaimer banner on landing */
-.landing-disclaimer {
-  max-width: 1320px; margin: 0 auto; padding: 0 20px 40px;
-}
-.ldis-inner {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 12px 16px;
-  display: flex; gap: 10px; align-items: flex-start;
-}
-.ldis-inner span { font-size: 13px; }
-.ldis-inner p { font-size: 10px; color: var(--text-3); line-height: 1.65; }
-
-/* ─────────────────────────────────────────────
-   BOTTOM NAV (fixed, shown on all pages)
-───────────────────────────────────────────── */
-#bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -4px 20px rgba(0,0,0,.06);
-  display: flex; justify-content: center;
-}
-#bottom-nav-inner {
-  display: flex; align-items: stretch;
-  max-width: 480px; width: 100%;
-}
-.bnav-item {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 3px; padding: 10px 8px 8px;
-  cursor: pointer; border: none; background: none;
-  font-family: 'DM Sans', sans-serif;
-  color: var(--text-3); transition: color .15s;
-  border-top: 2px solid transparent;
-  text-align: center;
-}
-.bnav-item:hover { color: var(--text-1); }
-.bnav-item.active { color: var(--navy); border-top-color: var(--navy); }
-.bnav-icon { font-size: 16px; line-height: 1; }
-.bnav-label { font-size: 9px; font-weight: 500; letter-spacing: .03em; text-transform: uppercase; }
-
-/* ─────────────────────────────────────────────
-   FOOTER — CREDIT LINE
-───────────────────────────────────────────── */
-#credit-footer {
-  background: var(--surface); border-top: 1px solid var(--border);
-  padding: 14px 20px 72px; /* 72px = space above bottom nav */
-}
-#credit-inner {
-  max-width: 1320px; margin: 0 auto;
-  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
-}
-.credit-text { font-size: 11px; color: var(--text-3); }
-.credit-link {
-  font-size: 11px; font-weight: 500; color: var(--navy);
-  text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
-}
-.credit-link:hover { text-decoration: underline; }
-.credit-sep { color: var(--border2); }
-.credit-disc { font-size: 10px; color: var(--text-3); }
-
+#empty-reg{display:none;text-align:center;padding:50px;color:var(--t3);font-size:12px}
 </style>
 </head>
 <body>
 
-<div id="nav">
-  <div id="nav-inner">
-    <div id="nt-landing" style="display:none"></div><div class="nav-brand">Supply Chain Risk Explorer <span>Lendlease · March 2026</span></div>
-    <div class="nav-tab active" id="nt-register" onclick="showPage('register',this)">
-      <span class="tab-icon">◫</span> Register
-    </div>
-    <div class="nav-tab" id="nt-mfg" onclick="showPage('mfg',this)">
-      <span class="tab-icon">⚙</span> Manufacturing Methods
-    </div>
-    <div id="nav-controls">
+<!-- ══ TOP NAV ══════════════════════════════════════════════ -->
+<div id="topnav">
+  <div id="topnav-inner">
+    <div class="nav-brand">Supply Chain Risk Explorer <span>Lendlease · 2026</span></div>
+    <div class="ntab active" id="nt-home"     onclick="nav('home',this)">⌂ Home</div>
+    <div class="ntab"        id="nt-register" onclick="nav('register',this)">◫ Register</div>
+    <div class="ntab"        id="nt-mfg"      onclick="nav('mfg',this)">⚙ Methods</div>
+    <div id="nav-right" style="visibility:hidden">
       <input type="search" id="q" placeholder="Search…" oninput="filterCards()">
       <select id="rF" onchange="filterCards()">
         <option value="">All ratings</option>
@@ -513,143 +393,130 @@ table.comp tr:hover td { background: var(--bg); }
       <select id="cF" onchange="filterCards()">
         <option value="">All categories</option>
       </select>
-      <span class="count-pill" id="cpill">44 products</span>
+      <span class="cpill mono" id="cpill">44</span>
     </div>
   </div>
 </div>
 
+<!-- ══ VIEWPORT (pages live here) ═══════════════════════════ -->
+<div id="viewport">
 
-<!-- ── LANDING PAGE ─────────────────────────────────────────── -->
-<div class="page active" id="page-landing">
-
-  <div class="landing-hero">
-    <div class="landing-eyebrow">Lendlease Australia &nbsp;·&nbsp; Indicative study &nbsp;·&nbsp; March 2026</div>
-
-    <h1 class="landing-title">
-      Middle East supply chain<br><strong>risk explorer</strong>
-    </h1>
-
-    <p class="landing-sub">
-      44 construction sub-products mapped from Lendlease project sites
-      back to their primary global raw material source. Assess Hormuz
-      disruption exposure, understand manufacturing routes, and identify
-      alternative specifications.
-    </p>
-
-    <div class="landing-stats">
-      <div class="stat-item"><div class="stat-num">44</div><div class="stat-label">Sub-products</div></div>
-      <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Material categories</div></div>
-      <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">Manufacturing routes</div></div>
-      <div class="stat-item"><div class="stat-num">30</div><div class="stat-label">Data columns per product</div></div>
-    </div>
-
-    <div class="landing-actions">
-      <button class="btn-primary" onclick="showPage('register', 'nt-register')">
-        ◫ &nbsp;Browse Supply Chain Register
-      </button>
-      <button class="btn-secondary" onclick="showPage('mfg', 'nt-mfg')">
-        ⚙ &nbsp;Manufacturing Methods
-      </button>
-    </div>
-
-    <div class="landing-cards">
-      <div class="lcard" onclick="showPage('register','nt-register')">
-        <div class="lcard-icon">🔴</div>
-        <div class="lcard-title">Critical Zone</div>
-        <div class="lcard-desc">19 products with high cost uplift and long lead time — immediate action required</div>
-      </div>
-      <div class="lcard" onclick="showPage('register','nt-register')">
-        <div class="lcard-icon">🟠</div>
-        <div class="lcard-title">Budget Risk Zone</div>
-        <div class="lcard-desc">11 products with significant cost exposure — price-protect before procurement</div>
-      </div>
-      <div class="lcard" onclick="showPage('register','nt-register')">
-        <div class="lcard-icon">🟡</div>
-        <div class="lcard-title">Programme Risk Zone</div>
-        <div class="lcard-desc">1 product with extended lead time that won't break budget but will break programme</div>
-      </div>
-      <div class="lcard" onclick="showPage('mfg','nt-mfg')">
-        <div class="lcard-icon">⚙</div>
-        <div class="lcard-title">Manufacturing Methods</div>
-        <div class="lcard-desc">BF-BOF vs EAF vs DRI for steel, Hall-Héroult vs recycled for aluminium, and 6 more materials</div>
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="pinner">
+      <div class="l-hero">
+        <div class="l-eye">Lendlease Australia &nbsp;·&nbsp; Indicative study &nbsp;·&nbsp; March 2026</div>
+        <h1 class="l-title">Middle East supply chain<br><strong>risk explorer</strong></h1>
+        <p class="l-sub">44 construction sub-products mapped from Lendlease project sites back to their primary global raw material source. Assess Hormuz disruption exposure, understand manufacturing routes, and identify alternative specifications.</p>
+        <div class="l-stats">
+          <div><div class="snum">44</div><div class="slbl">Sub-products</div></div>
+          <div><div class="snum">12</div><div class="slbl">Categories</div></div>
+          <div><div class="snum">8</div><div class="slbl">Mfg routes</div></div>
+          <div><div class="snum">30</div><div class="slbl">Data columns</div></div>
+        </div>
+        <div class="l-actions">
+          <button class="btnp" onclick="nav('register',document.getElementById('nt-register'))">◫ &nbsp;Browse Register</button>
+          <button class="btns" onclick="nav('mfg',document.getElementById('nt-mfg'))">⚙ &nbsp;Manufacturing Methods</button>
+        </div>
+        <div class="l-cards">
+          <div class="lcard" onclick="nav('register',document.getElementById('nt-register'))">
+            <div class="lcard-ic">🔴</div>
+            <div class="lcard-t">Critical Zone</div>
+            <div class="lcard-d">19 products — high cost uplift and long lead time. Act immediately.</div>
+          </div>
+          <div class="lcard" onclick="nav('register',document.getElementById('nt-register'))">
+            <div class="lcard-ic">🟠</div>
+            <div class="lcard-t">Budget Risk Zone</div>
+            <div class="lcard-d">11 products — significant cost exposure. Price-protect now.</div>
+          </div>
+          <div class="lcard" onclick="nav('register',document.getElementById('nt-register'))">
+            <div class="lcard-ic">🟡</div>
+            <div class="lcard-t">Programme Risk Zone</div>
+            <div class="lcard-d">1 product — long lead time. Won't break budget, will break programme.</div>
+          </div>
+          <div class="lcard" onclick="nav('mfg',document.getElementById('nt-mfg'))">
+            <div class="lcard-ic">⚙</div>
+            <div class="lcard-t">Manufacturing Methods</div>
+            <div class="lcard-d">BF-BOF vs EAF vs DRI for steel, Hall-Héroult vs recycled for aluminium, and 6 more.</div>
+          </div>
+        </div>
+        <div class="l-dis">
+          <span style="font-size:13px">⚠</span>
+          <p><strong>Indicative study only.</strong> Prepared within a constrained timeframe using publicly available information as of 29 March 2026. Cost uplifts, lead times and supplier names are directional estimates only. Not a basis for contractual or procurement decisions without further verification.</p>
+        </div>
       </div>
     </div>
+    <div class="cbar"><div class="cbar-inner">
+      <span class="ct">Developed by</span>
+      <a class="cl" href="https://au.linkedin.com/in/mehdirobati" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        Mehdi Robati
+      </a>
+      <span class="cs">·</span>
+      <span class="ct">Technical Manager Embodied Carbon, Lendlease Barangaroo</span>
+      <span class="cs">·</span>
+      <span class="cd">⚠ Indicative — public data only · Not for contractual decisions</span>
+    </div></div>
   </div>
 
-  <hr class="landing-divider">
-
-  <div class="landing-disclaimer">
-    <div class="ldis-inner">
-      <span>⚠</span>
-      <p>
-        <strong>Indicative study only.</strong> Prepared within a constrained timeframe using publicly available information as of 29 March 2026.
-        Cost uplifts, lead times and supplier names are directional estimates.
-        Not a basis for contractual or procurement decisions without further verification.
-        No Wikipedia sources used. All 30 data columns sourced from industry reports, annual reports and trade publications.
-      </p>
+  <!-- REGISTER PAGE -->
+  <div class="page" id="page-register">
+    <div class="pinner">
+      <div id="empty-reg">No products match your search.</div>
+      <div id="zones"></div>
     </div>
+    <div class="cbar"><div class="cbar-inner">
+      <span class="ct">Developed by</span>
+      <a class="cl" href="https://au.linkedin.com/in/mehdirobati" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        Mehdi Robati
+      </a>
+      <span class="cs">·</span>
+      <span class="ct">Technical Manager Embodied Carbon, Lendlease Barangaroo</span>
+    </div></div>
   </div>
 
-</div>
-
-<!-- ── REGISTER PAGE ──────────────────────────────────────── -->
-<div class="page" id="page-register">
-  <div class="page-inner">
-    <div id="empty">No products match.</div>
-    <div id="zones"></div>
-  </div>
-</div>
-
-<!-- ── MFG PAGE ───────────────────────────────────────────── -->
-<div class="page" id="page-mfg">
-  <div class="page-inner">
-    <div class="mfg-layout">
-      <div class="mfg-sidebar">
-        <div class="mfg-sidebar-title">Materials</div>
-        <div id="mfg-nav"></div>
+  <!-- MFG PAGE -->
+  <div class="page" id="page-mfg">
+    <div class="pinner">
+      <div class="mlay">
+        <div class="msidebar">
+          <div class="msidebar-t">Materials</div>
+          <div id="mfg-nav"></div>
+        </div>
+        <div class="mcontent" id="mfg-content"></div>
       </div>
-      <div class="mfg-content" id="mfg-content"></div>
     </div>
+    <div class="cbar"><div class="cbar-inner">
+      <span class="ct">Developed by</span>
+      <a class="cl" href="https://au.linkedin.com/in/mehdirobati" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        Mehdi Robati
+      </a>
+      <span class="cs">·</span>
+      <span class="ct">Technical Manager Embodied Carbon, Lendlease Barangaroo</span>
+    </div></div>
   </div>
-</div>
 
-<!-- ── CREDIT FOOTER ──────────────────────────────── -->
-<div id="credit-footer">
-  <div id="credit-inner">
-    <span class="credit-text">Developed by</span>
-    <a class="credit-link" href="https://au.linkedin.com/in/mehdirobati" target="_blank" rel="noopener">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      Mehdi Robati
-    </a>
-    <span class="credit-sep">·</span>
-    <span class="credit-text"> Reach out for comment/ imporvemtn </span>
-    <span class="credit-sep">·</span>
-    <span class="credit-disc">⚠ Indicative study — publicly available data only · Not for contractual decisions</span>
-  </div>
-</div>
+</div><!-- /viewport -->
 
-<!-- ── BOTTOM NAV ──────────────────────────────────── -->
-<div id="bottom-nav">
-  <div id="bottom-nav-inner">
-    <button class="bnav-item active" id="bn-landing" onclick="showPage('landing','nt-landing')">
-      <span class="bnav-icon">⌂</span>
-      <span class="bnav-label">Home</span>
+<!-- ══ BOTTOM NAV ════════════════════════════════════════════ -->
+<div id="botnav">
+  <div id="botnav-inner">
+    <button class="bnav active" id="bn-home"     onclick="nav('home',document.getElementById('nt-home'))">
+      <span class="bi">⌂</span><span class="bl">Home</span>
     </button>
-    <button class="bnav-item" id="bn-register" onclick="showPage('register','nt-register')">
-      <span class="bnav-icon">◫</span>
-      <span class="bnav-label">Register</span>
+    <button class="bnav"        id="bn-register" onclick="nav('register',document.getElementById('nt-register'))">
+      <span class="bi">◫</span><span class="bl">Register</span>
     </button>
-    <button class="bnav-item" id="bn-mfg" onclick="showPage('mfg','nt-mfg')">
-      <span class="bnav-icon">⚙</span>
-      <span class="bnav-label">Manufacturing</span>
+    <button class="bnav"        id="bn-mfg"      onclick="nav('mfg',document.getElementById('nt-mfg'))">
+      <span class="bi">⚙</span><span class="bl">Methods</span>
     </button>
   </div>
 </div>
 
-<!-- DATA -->
+<!-- ══ DATA ══════════════════════════════════════════════════ -->
 <script>
-</script>
-<script id="s-products">
 const PRODUCTS = [
   {
     "rank": "1",
@@ -2192,8 +2059,7 @@ const PRODUCTS = [
     "altConstraint": "Diesel fuel surcharge clause must be negotiated at contract award — post-award renegotiation is difficult. Geopolymer concrete is not accepted by all structural engineers and requires specification approval. GGBS domestic supply is declining — import from Asia (Pacific route) may be required for high-replacement-rate mixes."
   }
 ];
-</script>
-<script id="s-mfg">
+
 const MFG_MATERIALS = [
 {
   id: "steel",
@@ -2717,7 +2583,6 @@ const MFG_MATERIALS = [
 }
 ];
 
-// Map product names to manufacturing material ids
 const PRODUCT_TO_MFG = {
   "Rebar D500N":"steel","UB/UC sections":"steel","Hollow sections":"steel",
   "Plate & flat bar":"steel","Fabricated steel":"steel","Fabric mesh":"steel",
@@ -2735,605 +2600,436 @@ const PRODUCT_TO_MFG = {
   "Asphalt":"bitumen",
   "Structural plywood":"timber","Joinery":"timber"
 };
-
 </script>
+
+<!-- ══ APP ═══════════════════════════════════════════════════ -->
 <script>
-/* ─────────────────────────────────────────────
-   RISK HELPERS
-───────────────────────────────────────────── */
+/* ── Risk helpers ─────────────────────────────────────────── */
 const RISK = {
-  Critical:    { color: '#C0392B', bg: '#FDEDEC', dot: '#C0392B', border: '#F5C6C2' },
-  Significant: { color: '#D35400', bg: '#FEF0E7', dot: '#D35400', border: '#F5C7A1' },
-  Moderate:    { color: '#9A7D0A', bg: '#FEFBE8', dot: '#9A7D0A', border: '#EDE890' },
-  Minor:       { color: '#1E8449', bg: '#EAFAF1', dot: '#1E8449', border: '#A9DFBF' },
-  Low:         { color: '#1E8449', bg: '#EAFAF1', dot: '#1E8449', border: '#A9DFBF' },
-  Negligible:  { color: '#2471A3', bg: '#EBF5FB', dot: '#2471A3', border: '#AED6F1' },
+  Critical:    {c:'#C0392B',bg:'#FDEDEC',bd:'#F5C6C2'},
+  Significant: {c:'#D35400',bg:'#FEF0E7',bd:'#F5C7A1'},
+  Moderate:    {c:'#9A7D0A',bg:'#FEFBE8',bd:'#EDE890'},
+  Minor:       {c:'#1E8449',bg:'#EAFAF1',bd:'#A9DFBF'},
+  Low:         {c:'#1E8449',bg:'#EAFAF1',bd:'#A9DFBF'},
+  Negligible:  {c:'#2471A3',bg:'#EBF5FB',bd:'#AED6F1'},
 };
-const ZONE_META = {
-  'Critical':       { dot: '#C0392B', label: 'Critical Zone',       sub: 'High cost + long lead time — act immediately' },
-  'Budget Risk':    { dot: '#D35400', label: 'Budget Risk Zone',     sub: 'High cost uplift — price-protect now' },
-  'Programme Risk': { dot: '#9A7D0A', label: 'Programme Risk Zone',  sub: 'Long lead time — programme exposure' },
-  'Monitor':        { dot: '#1E8449', label: 'Monitor Zone',         sub: 'Standard procurement applies' },
+const ZONE = {
+  'Critical':       {dot:'#C0392B',name:'Critical Zone',       sub:'High cost + long lead time — act now'},
+  'Budget Risk':    {dot:'#D35400',name:'Budget Risk Zone',     sub:'High cost uplift — price-protect now'},
+  'Programme Risk': {dot:'#9A7D0A',name:'Programme Risk Zone',  sub:'Long lead time — programme exposure'},
+  'Monitor':        {dot:'#1E8449',name:'Monitor Zone',         sub:'Standard procurement applies'},
 };
-function rStyle(r) { const s = RISK[r] || RISK.Negligible; return `background:${s.bg};color:${s.color};border:1px solid ${s.border}`; }
-function rDot(r)   { const s = RISK[r] || RISK.Negligible; return s.dot; }
+function rs(r){const s=RISK[r]||RISK.Negligible;return `background:${s.bg};color:${s.c};border:1px solid ${s.bd}`}
+function rc(r){return (RISK[r]||RISK.Negligible).c}
+function esc(s){return (s||'').replace(/[^a-zA-Z0-9_-]/g,'_')}
+function esv(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function wrap(t,n){
+  if(!t)return['',''];
+  const w=t.split(' ');let a='',b='';
+  for(const x of w){
+    if(!a||(a+' '+x).length<=n)a+=(a?' ':'')+x;
+    else if(!b||(b+' '+x).length<=n)b+=(b?' ':'')+x;
+  }
+  return[a,b];
+}
 
-/* ─────────────────────────────────────────────
-   STATE
-───────────────────────────────────────────── */
-let openCard = null;
+/* ── State ────────────────────────────────────────────────── */
+let openCard=null;
+let curPage='home';
 
-/* ─────────────────────────────────────────────
-   BOOT
-───────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-  // Populate category filter
-  const cats = [...new Set(PRODUCTS.map(p => p.category))].sort();
-  const cF = document.getElementById('cF');
-  cats.forEach(c => { const o = document.createElement('option'); o.value = o.textContent = c; cF.appendChild(o); });
-
+/* ── Boot ─────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded',()=>{
+  // Category filter
+  const cats=[...new Set(PRODUCTS.map(p=>p.category))].sort();
+  const cF=document.getElementById('cF');
+  cats.forEach(c=>{const o=document.createElement('option');o.value=o.textContent=c;cF.appendChild(o);});
+  // Render register
   renderZones(PRODUCTS);
+  // Build mfg sidebar
   buildMfgNav();
-  if (MFG_MATERIALS.length) loadMfg(MFG_MATERIALS[0].id);
+  if(MFG_MATERIALS.length) loadMfg(MFG_MATERIALS[0].id);
 });
 
-/* ─────────────────────────────────────────────
-   PAGE SWITCHING
-───────────────────────────────────────────── */
-function showPage(id, elOrId) {
-  // Accept element or string id
-  const el = typeof elOrId === 'string' ? document.getElementById(elOrId) : elOrId;
-
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.bnav-item').forEach(t => t.classList.remove('active'));
-
-  const page = document.getElementById('page-' + id);
-  if (page) page.classList.add('active');
-  if (el) el.classList.add('active');
-
-  // Bottom nav sync
-  const bn = document.getElementById('bn-' + id);
-  if (bn) bn.classList.add('active');
-
-  // Show/hide top nav search controls
-  const nc = document.getElementById('nav-controls');
-  if (nc) nc.style.visibility = id === 'register' ? 'visible' : 'hidden';
-
-  // Scroll to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+/* ── Navigation ───────────────────────────────────────────── */
+function nav(pageId, ntabEl){
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  // Deactivate all tab/bnav items
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.bnav').forEach(t=>t.classList.remove('active'));
+  // Show target page
+  document.getElementById('page-'+pageId).classList.add('active');
+  // Activate nav items
+  if(ntabEl) ntabEl.classList.add('active');
+  const bn=document.getElementById('bn-'+pageId);
+  if(bn) bn.classList.add('active');
+  // Show/hide search only on register
+  document.getElementById('nav-right').style.visibility=pageId==='register'?'visible':'hidden';
+  curPage=pageId;
 }
 
-/* ─────────────────────────────────────────────
-   REGISTER — ZONES + CARDS
-───────────────────────────────────────────── */
-function renderZones(products) {
-  const container = document.getElementById('zones');
-  const zones = ['Critical', 'Budget Risk', 'Programme Risk', 'Monitor'];
-  container.innerHTML = '';
-
-  let total = 0;
-  zones.forEach(z => {
-    const zm = ZONE_META[z];
-    const zp = products.filter(p => p.zone === z);
-    total += zp.length;
-
-    const sec = document.createElement('div');
-    sec.className = 'zone';
-    const isMonitor = z === 'Monitor';
-
-    sec.innerHTML = `
-      <button class="zone-trigger" onclick="toggleZone('${z}')">
-        <span class="zone-dot" style="background:${zm.dot}"></span>
-        <span class="zone-name">${zm.label}</span>
-        <span class="zone-sub">— ${zm.sub}</span>
-        <span class="zone-count mono">${zp.length}</span>
-        <span class="zone-chev ${isMonitor ? '' : 'open'}" id="zch-${z}">▶</span>
+/* ── Register: render zones ───────────────────────────────── */
+function renderZones(products){
+  const container=document.getElementById('zones');
+  container.innerHTML='';
+  let total=0;
+  ['Critical','Budget Risk','Programme Risk','Monitor'].forEach(z=>{
+    const zm=ZONE[z];
+    const zp=products.filter(p=>p.zone===z);
+    total+=zp.length;
+    const open=z!=='Monitor';
+    const sec=document.createElement('div');
+    sec.className='zone';
+    sec.innerHTML=`
+      <button class="ztrig" onclick="toggleZ('${z}')">
+        <span class="zdot" style="background:${zm.dot}"></span>
+        <span class="zname">${zm.name}</span>
+        <span class="zsub">— ${zm.sub}</span>
+        <span class="zcnt mono">${zp.length}</span>
+        <span class="zchev${open?' open':''}" id="zch-${z}">▶</span>
       </button>
-      <div class="zone-body ${isMonitor ? '' : 'open'}" id="zb-${z}">
-        <div class="cards" id="zg-${z}"></div>
+      <div class="zbody${open?' open':''}" id="zb-${z}">
+        <div class="grid" id="zg-${z}"></div>
       </div>`;
     container.appendChild(sec);
-
-    const grid = sec.querySelector('.cards');
-    zp.forEach(p => grid.appendChild(buildCard(p)));
+    const grid=sec.querySelector('.grid');
+    zp.forEach(p=>grid.appendChild(buildCard(p)));
   });
-
-  document.getElementById('cpill').textContent = total + ' product' + (total !== 1 ? 's' : '');
-  document.getElementById('empty').style.display = total === 0 ? 'block' : 'none';
+  document.getElementById('cpill').textContent=total;
+  document.getElementById('empty-reg').style.display=total?'none':'block';
 }
 
-function toggleZone(z) {
-  const b = document.getElementById('zb-' + z);
-  const ch = document.getElementById('zch-' + z);
-  const open = b.classList.contains('open');
-  b.classList.toggle('open', !open);
-  ch.classList.toggle('open', !open);
+function toggleZ(z){
+  document.getElementById('zb-'+z).classList.toggle('open');
+  document.getElementById('zch-'+z).classList.toggle('open');
 }
 
-/* ─────────────────────────────────────────────
-   CARD
-───────────────────────────────────────────── */
-function buildCard(p) {
-  const el = document.createElement('div');
-  el.className = 'card';
-  el.id = 'card-' + esc(p.id);
-
-  el.innerHTML = `
-    <div class="card-top" onclick="toggleCard('${p.id}', this.closest('.card'))">
-      <span class="c-rank mono">${p.rank}</span>
-      <div class="c-body">
-        <div class="c-name">${p.name}</div>
-        <div class="c-cat">${p.category}</div>
-      </div>
-      <div class="c-risk">
-        <span class="risk-badge" style="${rStyle(p.rating)}">${p.rating}</span>
-      </div>
+/* ── Card ─────────────────────────────────────────────────── */
+function buildCard(p){
+  const el=document.createElement('div');
+  el.className='card';
+  el.id='card-'+esc(p.id);
+  const mfgId=PRODUCT_TO_MFG[p.name];
+  const mBtn=mfgId?`<button class="mfgbtn" onclick="goMfg('${mfgId}')">⚙ Manufacturing methods ↗</button>`:'';
+  el.innerHTML=`
+    <div class="ctop" onclick="toggleCard('${p.id}',this.closest('.card'))">
+      <span class="crnk">${p.rank}</span>
+      <div class="cbod"><div class="cnm">${p.name}</div><div class="ccat">${p.category}</div></div>
+      <span class="rbdg" style="${rs(p.rating)}">${p.rating}</span>
     </div>
-    <div class="card-meta" onclick="toggleCard('${p.id}', this.closest('.card'))">
-      <span class="meta-tag">${p.cost}</span>
-      <span class="meta-tag">${p.lead}</span>
-      <span class="meta-tag">${p.trade}</span>
+    <div class="cmeta" onclick="toggleCard('${p.id}',this.closest('.card'))">
+      <span class="mtag">${p.cost}</span>
+      <span class="mtag">${p.lead}</span>
+      <span class="mtag">${p.trade}</span>
     </div>
-    <div class="card-detail" id="cd-${esc(p.id)}">${buildDetail(p)}</div>`;
+    <div class="cexp" id="cx-${esc(p.id)}">
+      ${buildFlow(p)}
+      <div class="dtabs">
+        <div class="dtab active" onclick="swTab('${p.id}','sc',this)">Supply Chain</div>
+        <div class="dtab" onclick="swTab('${p.id}','pe',this)">Process & Energy</div>
+        <div class="dtab" onclick="swTab('${p.id}','alt',this)">Alternative</div>
+        <div class="dtab" onclick="swTab('${p.id}','app',this)">Application</div>
+      </div>
+      <div id="tp-sc-${esc(p.id)}" class="dpnl active">${tabSC(p)}${mBtn}</div>
+      <div id="tp-pe-${esc(p.id)}" class="dpnl">${tabPE(p)}</div>
+      <div id="tp-alt-${esc(p.id)}" class="dpnl">${tabAlt(p)}</div>
+      <div id="tp-app-${esc(p.id)}" class="dpnl">${tabApp(p)}</div>
+    </div>`;
   return el;
 }
 
-function toggleCard(id, card) {
-  const cd = document.getElementById('cd-' + esc(id));
-  const isOpen = cd.classList.contains('open');
-  if (openCard && openCard !== card) {
+function toggleCard(id,card){
+  const cx=document.getElementById('cx-'+esc(id));
+  const isOpen=cx.classList.contains('open');
+  if(openCard&&openCard!==card){
     openCard.classList.remove('open');
-    openCard.querySelector('.card-detail').classList.remove('open');
+    openCard.querySelector('.cexp').classList.remove('open');
   }
-  cd.classList.toggle('open', !isOpen);
-  card.classList.toggle('open', !isOpen);
-  openCard = isOpen ? null : card;
-  if (!isOpen) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  cx.classList.toggle('open',!isOpen);
+  card.classList.toggle('open',!isOpen);
+  openCard=isOpen?null:card;
+  if(!isOpen)setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),60);
 }
 
-/* ─────────────────────────────────────────────
-   CARD DETAIL
-───────────────────────────────────────────── */
-function buildDetail(p) {
-  const mfgId = PRODUCT_TO_MFG[p.name];
-  const mfgBtn = mfgId
-    ? `<button class="go-mfg-btn" onclick="goMfg('${mfgId}')">⚙ Manufacturing methods ↗</button>`
-    : '';
-
-  return `
-    ${buildFlowDiagram(p)}
-    <div class="detail-tabs">
-      <div class="d-tab active" onclick="swTab('${p.id}','sc',this)">Supply Chain</div>
-      <div class="d-tab" onclick="swTab('${p.id}','pe',this)">Process & Energy</div>
-      <div class="d-tab" onclick="swTab('${p.id}','alt',this)">Alternative</div>
-      <div class="d-tab" onclick="swTab('${p.id}','app',this)">Application</div>
-    </div>
-    <div id="tp-sc-${esc(p.id)}" class="d-panel active">${buildSCTab(p)}${mfgBtn}</div>
-    <div id="tp-pe-${esc(p.id)}" class="d-panel">${buildPETab(p)}</div>
-    <div id="tp-alt-${esc(p.id)}" class="d-panel">${buildAltTab(p)}</div>
-    <div id="tp-app-${esc(p.id)}" class="d-panel">${buildAppTab(p)}</div>`;
-}
-
-function swTab(id, tab, el) {
-  ['sc', 'pe', 'alt', 'app'].forEach(t => {
-    const p = document.getElementById('tp-' + t + '-' + esc(id));
-    if (p) p.classList.toggle('active', t === tab);
+function swTab(id,tab,el){
+  ['sc','pe','alt','app'].forEach(t=>{
+    const p=document.getElementById('tp-'+t+'-'+esc(id));
+    if(p)p.classList.toggle('active',t===tab);
   });
-  el.closest('.detail-tabs').querySelectorAll('.d-tab').forEach(b => b.classList.remove('active'));
+  el.closest('.dtabs').querySelectorAll('.dtab').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
 }
 
-/* vertical flow */
-function buildFlowDiagram(p) {
-  const nodes = [
-    { tier: 'Lendlease Project', name: 'Sydney, Australia', country: '', note: '', risk: null, project: true },
-    { tier: 'Tier 1 — AU Supplier', name: p.t1supplier, country: p.t1country, note: p.t1detail, risk: p.t1risk },
-    { tier: 'Tier 2 — Component', name: p.t2supplier, country: p.t2country, note: p.t2detail, risk: p.t2risk },
-    { tier: 'Tier 3 — Feedstock', name: p.t3supplier, country: p.t3country, note: p.t3detail, risk: p.t3risk },
-    { tier: 'Raw Material', name: p.rawMaterial, country: p.rawCountry, note: 'Global supplier: ' + p.globalSupplier, risk: p.t3risk },
+/* ── Flow diagram ─────────────────────────────────────────── */
+function buildFlow(p){
+  const nodes=[
+    {tier:'Lendlease Project',name:'Sydney, Australia',country:'',note:'',risk:null,proj:true},
+    {tier:'Tier 1 — AU Supplier',name:p.t1supplier,country:p.t1country,note:p.t1detail,risk:p.t1risk},
+    {tier:'Tier 2 — Component',  name:p.t2supplier,country:p.t2country,note:p.t2detail,risk:p.t2risk},
+    {tier:'Tier 3 — Feedstock',  name:p.t3supplier,country:p.t3country,note:p.t3detail,risk:p.t3risk},
+    {tier:'Raw Material',        name:p.rawMaterial,country:p.rawCountry,note:'Global: '+p.globalSupplier,risk:p.t3risk},
   ];
-
-  let h = `<div class="flow-wrap"><div class="flow-eyebrow">Supply chain — project to primary source</div><div class="flow-nodes">`;
-  nodes.forEach((n, i) => {
-    const badge = n.risk ? `<div class="fn-risk"><span class="risk-badge" style="${rStyle(n.risk)}">${n.risk}</span></div>` : '';
-    h += `<div class="flow-node${n.project ? ' project' : ''}">
-      <div class="fn-tier">${n.tier}</div>
-      <div class="fn-name">${(n.name || '—').substring(0, 110)}</div>
-      ${n.country ? `<div class="fn-country">📍 ${n.country}</div>` : ''}
-      ${n.note ? `<div class="fn-note">${n.note.substring(0, 160)}</div>` : ''}
+  let h=`<div class="flow-w"><div class="flow-ey">Supply chain — project to primary source</div>`;
+  nodes.forEach((n,i)=>{
+    const badge=n.risk?`<span class="rbdg" style="${rs(n.risk)};margin-top:4px;display:inline-block">${n.risk}</span>`:'';
+    h+=`<div class="fn${n.proj?' fn-proj':''}">
+      <div class="fn-ti">${n.tier}</div>
+      <div class="fn-nm">${(n.name||'—').substring(0,110)}</div>
+      ${n.country?`<div class="fn-co">📍 ${n.country}</div>`:''}
+      ${n.note?`<div class="fn-nt">${n.note.substring(0,160)}</div>`:''}
       ${badge}
     </div>`;
-    if (i < nodes.length - 1) h += `<div class="flow-arrow">↓</div>`;
+    if(i<nodes.length-1)h+=`<div class="farr">↓</div>`;
   });
-  return h + `</div></div>`;
+  return h+`</div>`;
 }
 
-function buildSCTab(p) {
-  let h = `<div class="info-block"><div class="info-label">AU Supplier</div><div class="info-val">${p.auSupplier}</div></div>
-    <div class="info-block"><div class="info-label">Procurement</div><div class="info-val">${p.procurement}</div></div>`;
-  [
-    { l: 'Tier 1', s: p.t1supplier, c: p.t1country, r: p.t1risk, d: p.t1detail },
-    { l: 'Tier 2', s: p.t2supplier, c: p.t2country, r: p.t2risk, d: p.t2detail },
-    { l: 'Tier 3', s: p.t3supplier, c: p.t3country, r: p.t3risk, d: p.t3detail },
-  ].forEach(t => {
-    const bdr = t.r ? `border-left-color:${rDot(t.r)}` : '';
-    h += `<div class="tier-block" style="${bdr}">
-      <div class="info-label">${t.l}</div>
-      <div class="t-name">${t.s || '—'}</div>
-      <div class="t-country">📍 ${t.c || '—'}</div>
-      ${t.r ? `<span class="risk-badge" style="${rStyle(t.r)}">${t.r}</span>` : ''}
-      <div class="t-note">${t.d || ''}</div>
-    </div>`;
+function tabSC(p){
+  let h=`<div class="ib"><div class="il">AU Supplier</div><div class="iv">${p.auSupplier}</div></div>
+    <div class="ib"><div class="il">Procurement</div><div class="iv">${p.procurement}</div></div>`;
+  [{l:'Tier 1',s:p.t1supplier,c:p.t1country,r:p.t1risk,d:p.t1detail},
+   {l:'Tier 2',s:p.t2supplier,c:p.t2country,r:p.t2risk,d:p.t2detail},
+   {l:'Tier 3',s:p.t3supplier,c:p.t3country,r:p.t3risk,d:p.t3detail}].forEach(t=>{
+    h+=`<div class="tblk" style="border-left-color:${rc(t.r||'Low')}">
+      <div class="il">${t.l}</div>
+      <div class="tnm">${t.s||'—'}</div><div class="tco">📍 ${t.c||'—'}</div>
+      ${t.r?`<span class="rbdg" style="${rs(t.r)}">${t.r}</span>`:''}
+      <div class="tnt">${t.d||''}</div></div>`;
   });
-  h += `<div class="info-block" style="margin-top:10px">
-    <div class="info-label">Raw Material</div><div class="info-val">${p.rawMaterial}</div></div>
-    <div class="info-block"><div class="info-label">Global Supplier</div><div class="info-val">${p.globalSupplier}</div></div>`;
+  h+=`<div class="ib" style="margin-top:8px"><div class="il">Raw Material</div><div class="iv">${p.rawMaterial}</div></div>
+    <div class="ib"><div class="il">Global Supplier</div><div class="iv">${p.globalSupplier}</div></div>`;
   return h;
 }
-
-function buildPETab(p) {
-  return `<div class="info-block"><div class="info-label">Manufacturing Process</div><div class="info-val">${p.mfgProcess}</div></div>
-    <div class="info-block"><div class="info-label">🔥 Primary Energy</div><div class="info-val">${p.primaryEnergy}</div></div>
-    <div class="info-block"><div class="info-label">🚛 Secondary Energy</div><div class="info-val">${p.secondaryEnergy}</div></div>`;
+function tabPE(p){
+  return `<div class="ib"><div class="il">Manufacturing Process</div><div class="iv">${p.mfgProcess}</div></div>
+    <div class="ib"><div class="il">🔥 Primary Energy</div><div class="iv">${p.primaryEnergy}</div></div>
+    <div class="ib"><div class="il">🚛 Secondary Energy</div><div class="iv">${p.secondaryEnergy}</div></div>`;
+}
+function tabAlt(p){
+  return `<div class="ib"><div class="il">Alternative — avoids ME exposure</div><div class="altb"><div class="iv">${p.altSpec}</div></div></div>
+    <div class="ib"><div class="il">Constraint</div><div class="conb"><div class="iv">${p.altConstraint}</div></div></div>`;
+}
+function tabApp(p){
+  return `<div class="ib"><div class="il">Building Element</div><div class="iv">${p.building}</div></div>
+    <div class="ib"><div class="il">Project Type</div><div class="iv">${p.projectType}</div></div>
+    <div class="ib"><div class="il">Trade Package</div><div class="iv">${p.trade}</div></div>`;
 }
 
-function buildAltTab(p) {
-  return `<div class="info-block"><div class="info-label">Alternative specification — avoids ME exposure</div>
-    <div class="alt-block"><div class="info-val">${p.altSpec}</div></div></div>
-    <div class="info-block"><div class="info-label">Constraint</div>
-    <div class="con-block"><div class="info-val">${p.altConstraint}</div></div></div>`;
-}
-
-function buildAppTab(p) {
-  return `<div class="info-block"><div class="info-label">Building Element</div><div class="info-val">${p.building}</div></div>
-    <div class="info-block"><div class="info-label">Project Type</div><div class="info-val">${p.projectType}</div></div>
-    <div class="info-block"><div class="info-label">Trade Package</div><div class="info-val">${p.trade}</div></div>`;
-}
-
-/* ─────────────────────────────────────────────
-   FILTER
-───────────────────────────────────────────── */
-function filterCards() {
-  const q = document.getElementById('q').value.toLowerCase();
-  const r = document.getElementById('rF').value;
-  const c = document.getElementById('cF').value;
-  const fp = PRODUCTS.filter(p =>
-    (!q || [p.name, p.category, p.trade, p.auSupplier || ''].join(' ').toLowerCase().includes(q)) &&
-    (!r || p.rating === r) && (!c || p.category === c));
+/* ── Filter ───────────────────────────────────────────────── */
+function filterCards(){
+  const q=document.getElementById('q').value.toLowerCase();
+  const r=document.getElementById('rF').value;
+  const c=document.getElementById('cF').value;
+  const fp=PRODUCTS.filter(p=>
+    (!q||[p.name,p.category,p.trade,p.auSupplier||''].join(' ').toLowerCase().includes(q))&&
+    (!r||p.rating===r)&&(!c||p.category===c));
   renderZones(fp);
-  ['Critical', 'Budget Risk', 'Programme Risk', 'Monitor'].forEach(z => {
-    const has = fp.some(p => p.zone === z);
-    const b = document.getElementById('zb-' + z);
-    const ch = document.getElementById('zch-' + z);
-    if (b) { b.classList.toggle('open', has); ch.classList.toggle('open', has); }
+  ['Critical','Budget Risk','Programme Risk','Monitor'].forEach(z=>{
+    const has=fp.some(p=>p.zone===z);
+    const b=document.getElementById('zb-'+z);
+    const ch=document.getElementById('zch-'+z);
+    if(b){b.classList.toggle('open',has);ch.classList.toggle('open',has);}
   });
 }
 
-/* ─────────────────────────────────────────────
-   MFG PAGE — NAV
-───────────────────────────────────────────── */
-function buildMfgNav() {
-  const nav = document.getElementById('mfg-nav');
-  MFG_MATERIALS.forEach(m => {
-    const el = document.createElement('div');
-    el.className = 'mfg-nav-item';
-    el.id = 'mni-' + m.id;
-    el.onclick = () => loadMfg(m.id);
-    el.innerHTML = `<span class="mni-icon">${m.icon}</span>
-      <div><div class="mni-name">${m.name}</div><div class="mni-sub">${m.routes.length} routes</div></div>`;
+/* ── Mfg nav ──────────────────────────────────────────────── */
+function buildMfgNav(){
+  const nav=document.getElementById('mfg-nav');
+  MFG_MATERIALS.forEach(m=>{
+    const el=document.createElement('div');
+    el.className='mni';el.id='mni-'+m.id;
+    el.onclick=()=>loadMfg(m.id);
+    el.innerHTML=`<span class="mni-ic">${m.icon}</span>
+      <div><div class="mni-n">${m.name}</div><div class="mni-s">${m.routes.length} routes</div></div>`;
     nav.appendChild(el);
   });
 }
 
-/* ─────────────────────────────────────────────
-   MFG PAGE — CONTENT
-───────────────────────────────────────────── */
-function loadMfg(id) {
-  document.querySelectorAll('.mfg-nav-item').forEach(i => i.classList.remove('active'));
-  const si = document.getElementById('mni-' + id);
-  if (si) si.classList.add('active');
+/* ── Load mfg material ────────────────────────────────────── */
+function loadMfg(id){
+  document.querySelectorAll('.mni').forEach(i=>i.classList.remove('active'));
+  const si=document.getElementById('mni-'+id);
+  if(si)si.classList.add('active');
+  const m=MFG_MATERIALS.find(x=>x.id===id);
+  if(!m)return;
+  const con=document.getElementById('mfg-content');
 
-  const m = MFG_MATERIALS.find(x => x.id === id);
-  if (!m) return;
+  const linked=(m.linkedProducts||[]).map(lp=>`<span class="chip" onclick="goProduct('${lp}')">${lp}</span>`).join('');
 
-  const con = document.getElementById('mfg-content');
-  let h = '';
-
-  /* ── Hero ── */
-  const linked = (m.linkedProducts || []).map(lp =>
-    `<span class="lchip" onclick="goProduct('${lp}')">${lp}</span>`).join('');
-  h += `<div class="mfg-hero">
-    <div class="mfg-hero-top">
-      <div class="mfg-icon-big">${m.icon}</div>
-      <div><div class="mfg-title">${m.name}</div><div class="mfg-tagline">${m.tagline}</div></div>
+  let h=`<div class="mhero">
+    <div class="mhero-top">
+      <span class="mic-big">${m.icon}</span>
+      <div><div class="mtitle">${m.name}</div><div class="mtagline">${m.tagline}</div></div>
     </div>
-    <div class="me-banner"><div class="meb-dot"></div><p><strong>ME exposure:</strong> ${m.meLink}</p></div>
-    <div class="au-banner"><div class="meb-dot"></div><p><strong>AU context:</strong> ${m.auRelevance}</p></div>
-    ${linked ? `<div class="linked-label" style="margin-top:10px">Linked products</div><div class="linked-chips">${linked}</div>` : ''}
+    <div class="meb meb-me"><div class="meb-dot" style="background:#C0392B"></div><p><strong>ME exposure:</strong> ${m.meLink}</p></div>
+    <div class="meb meb-au"><div class="meb-dot" style="background:#1F4E79"></div><p><strong>AU context:</strong> ${m.auRelevance}</p></div>
+    ${linked?`<div class="lnkd-l">Linked products</div><div class="chips">${linked}</div>`:''}
   </div>`;
 
-  /* ── SVG Visualisation — bottom-up flow per route ── */
-  h += `<div class="mfg-viz-wrap">
-    <div class="viz-eyebrow">Process flow — raw source to finished product (bottom to top)</div>
-    ${buildSVGViz(m)}
-  </div>`;
+  h+=`<div class="viz-w"><div class="viz-ey">Process flow — raw source to finished product (bottom to top)</div>${buildSVG(m)}</div>`;
 
-  /* ── Route cards ── */
-  h += `<div class="routes-grid">`;
-  m.routes.forEach(r => {
-    const domStyle = r.dominant ? `background:${r.color};color:#fff` : `background:#F0F2F5;color:#555`;
-    const meRisk = r.meLink.split('—')[0].trim();
-    const meRS = rStyle(meRisk) || 'background:#F0F2F5;color:#555';
-    h += `<div class="route-card">
-      <div class="rc-header" style="border-left:3px solid ${r.color}">
-        <div class="rc-top">
-          <div class="rc-name" style="color:${r.color}">${r.name}</div>
-          <span class="rc-dominant mono" style="${domStyle}">${r.dominantLabel}</span>
+  h+=`<div class="rcards">`;
+  m.routes.forEach(r=>{
+    const ds=r.dominant?`background:${r.color};color:#fff`:`background:#F0F2F5;color:#555`;
+    const mw=r.meLink.split(' ')[0];
+    h+=`<div class="rcard">
+      <div class="rcard-h" style="border-left:3px solid ${r.color}">
+        <div class="rcard-top">
+          <div class="rcard-n" style="color:${r.color}">${r.name}</div>
+          <span class="rcard-dom mono" style="${ds}">${r.dominantLabel}</span>
         </div>
-        <div class="rc-full">${r.full}</div>
+        <div class="rcard-f">${r.full}</div>
       </div>
-      <div class="rc-body">
-        <div class="rf-section">
-          <div class="rf-label">Raw inputs</div>
-          <div class="rf-chips">${(r.rawInputs || []).map(i => `<span class="rf-chip">${i}</span>`).join('')}</div>
-        </div>
-        <div class="rf-section">
-          <div class="rf-label">Process steps</div>
-          ${(r.steps || []).map((s, i) => `<div class="rf-step"><div class="rf-step-n">${i + 1}</div><div class="rf-step-t">${s}</div></div>`).join('')}
-        </div>
-        <div class="rf-section">
-          <div class="rf-label">Energy</div>
-          <div class="rf-val">🔥 ${r.energy}</div>
-        </div>
-        <div class="rf-section">
-          <div class="rf-label">CO₂ intensity</div>
-          <div class="rf-val">💨 ${r.co2}</div>
-        </div>
-        <div class="rf-section">
-          <div class="rf-label">ME exposure</div>
-          <span class="me-flag" style="${rStyle(meRisk)}">${r.meLink.substring(0, 130)}</span>
-        </div>
-        <div class="rf-section">
-          <div class="rf-label">AU example</div>
-          <div class="rf-val">${r.auExample}</div>
-        </div>
-      </div>
-    </div>`;
+      <div class="rcard-b">
+        <div class="rf"><div class="rl2">Raw inputs</div>
+          <div class="rchips">${(r.rawInputs||[]).map(i=>`<span class="rchip">${i}</span>`).join('')}</div></div>
+        <div class="rf"><div class="rl2">Process steps</div>
+          ${(r.steps||[]).map((s,i)=>`<div class="rstep"><div class="rsn">${i+1}</div><div class="rst">${s}</div></div>`).join('')}</div>
+        <div class="rf"><div class="rl2">Energy</div><div class="rv">🔥 ${r.energy}</div></div>
+        <div class="rf"><div class="rl2">CO₂ intensity</div><div class="rv">💨 ${r.co2}</div></div>
+        <div class="rf"><div class="rl2">ME exposure</div>
+          <span class="meflag" style="${rs(mw)}">${r.meLink.substring(0,120)}</span></div>
+        <div class="rf"><div class="rl2">AU example</div><div class="rv">${r.auExample}</div></div>
+      </div></div>`;
   });
-  h += `</div>`;
+  h+=`</div>`;
 
-  /* ── Comparison table ── */
-  if (m.comparison && m.comparison.length) {
-    const cols = m.routes.map(r => r.name);
-    h += `<div class="comp-wrap">
-      <div class="comp-title">Route comparison</div>
-      <table class="comp"><thead><tr>
-        <th>Factor</th>${cols.map(c => `<th>${c}</th>`).join('')}
-      </tr></thead><tbody>`;
-    m.comparison.forEach(row => {
-      const vals = [row.bfbof, row.eaf, row.dri].slice(0, cols.length);
-      h += `<tr><td>${row.label}</td>${vals.map(v => `<td>${v || '—'}</td>`).join('')}</tr>`;
+  if(m.comparison&&m.comparison.length){
+    const cols=m.routes.map(r=>r.name);
+    h+=`<div class="ctbl-w"><div class="ctbl-t">Route comparison</div>
+      <table class="ctbl"><thead><tr><th>Factor</th>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+    m.comparison.forEach(row=>{
+      const vals=[row.bfbof,row.eaf,row.dri].slice(0,cols.length);
+      h+=`<tr><td>${row.label}</td>${vals.map(v=>`<td>${v||'—'}</td>`).join('')}</tr>`;
     });
-    h += `</tbody></table></div>`;
+    h+=`</tbody></table></div>`;
   }
 
-  con.innerHTML = h;
-  con.scrollTop = 0;
+  con.innerHTML=h;
 }
 
-/* ─────────────────────────────────────────────
-   SVG BOTTOM-UP FLOW VISUALISATION
-───────────────────────────────────────────── */
-function buildSVGViz(m) {
-  // Layout: each route gets a two-column panel side by side
-  // LEFT column  = supply chain origin (where does it come from)
-  // RIGHT column = process steps bottom to top
-  // Routes are laid out left to right with a divider
+/* ── SVG bottom-up + origin ───────────────────────────────── */
+function buildSVG(m){
+  const routes=m.routes;
+  const maxSteps=Math.max(...routes.map(r=>r.steps.length));
+  const OW=155,PW=185,CG=14,RG=28,CH=46,AH=20,ROW=CH+AH;
+  const PW2=OW+CG+PW;
+  const totalRows=maxSteps+2;
+  const H=totalRows*ROW+56;
+  const W=routes.length*PW2+(routes.length-1)*RG+40;
 
-  const routes = m.routes;
-  const maxSteps = Math.max(...routes.map(r => r.steps.length));
-
-  // Card dimensions
-  const CW = 190, CH = 48, AH = 22, ROW = CH + AH;
-  const ORIGIN_W = 160; // narrower origin column
-  const PROC_W = 190;   // process steps column
-  const COL_GAP = 16;   // gap between origin and process within a route
-  const ROUTE_GAP = 32; // gap between routes
-  const PANEL_W = ORIGIN_W + COL_GAP + PROC_W;
-
-  const totalRows = maxSteps + 2; // raw + steps + output
-  const H = totalRows * ROW + 80;
-  const W = routes.length * PANEL_W + (routes.length - 1) * ROUTE_GAP + 40;
-
-  let svg = `<svg class="flow-svg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="min-height:300px;max-height:700px">`;
-  svg += `<defs>
-    <marker id="arrD" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#CCCCCC"/>
-    </marker>
-    <marker id="arrU" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L6,3 Z" fill="#BBBBBB"/>
+  let s=`<svg class="fsvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="max-height:660px">
+  <defs>
+    <marker id="arU" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L6,3 Z" fill="#CCCCCC"/>
     </marker>
   </defs>`;
 
-  // Column headers
-  routes.forEach((r, ri) => {
-    const panelX = 20 + ri * (PANEL_W + ROUTE_GAP);
-    const originX = panelX;
-    const procX = panelX + ORIGIN_W + COL_GAP;
-
-    // Route name spanning full panel
-    svg += `<text x="${panelX + PANEL_W/2}" y="16" text-anchor="middle"
-      font-family="DM Sans,sans-serif" font-size="11" font-weight="600" fill="${r.color}">${r.name}</text>`;
-
-    // Sub-column labels
-    svg += `<text x="${originX + ORIGIN_W/2}" y="28" text-anchor="middle"
-      font-family="DM Mono,monospace" font-size="7" fill="#AAAAAA" letter-spacing="0.5">ORIGIN</text>`;
-    svg += `<text x="${procX + PROC_W/2}" y="28" text-anchor="middle"
-      font-family="DM Mono,monospace" font-size="7" fill="#AAAAAA" letter-spacing="0.5">PROCESS</text>`;
-
-    // Build origin nodes: raw materials → global supplier → country
-    const originNodes = [
-      { label: "Primary source", text: (r.rawInputs||[]).slice(0,2).join(', ').substring(0,38), isRaw: true },
-      { label: "Key country", text: r.auExample.split('—')[0].trim().substring(0,38), isMid: true },
-      { label: "AU relevance", text: r.auExample.substring(0,42), isAU: true },
+  routes.forEach((r,ri)=>{
+    const px=20+ri*(PW2+RG);
+    const ox=px, procx=px+OW+CG;
+    const steps=r.steps||[];
+    const procNodes=[
+      {label:'Raw Input',text:(r.rawInputs||[])[0]||'',isBot:true},
+      ...steps.map((st,i)=>({text:st,num:i+1})),
+      {label:'Output',text:m.name+' product',isTop:true},
     ];
-
-    // Build process nodes: steps (bottom to top) + output at top
-    const procNodes = [
-      { label: "Raw input", text: (r.rawInputs||[])[0]||'', isBottom: true },
-      ...r.steps.map((s,i) => ({ text: s, stepNum: i+1 })),
-      { label: "Output", text: m.name + " — ready for AU market", isTop: true },
+    const pc=procNodes.length;
+    const originNodes=[
+      {label:'Primary source',text:(r.rawInputs||[]).slice(0,2).join(', ').substring(0,36),isRaw:true},
+      {label:'Key location',  text:r.auExample.split('—')[0].trim().substring(0,36),isMid:true},
+      {label:'AU relevance',  text:r.auExample.substring(0,38),isAU:true},
     ];
+    const oc=originNodes.length;
 
-    const procCount = procNodes.length;
-    const originCount = originNodes.length;
+    // Route label
+    s+=`<text x="${px+PW2/2}" y="14" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="600" fill="${r.color}">${r.name}</text>`;
+    s+=`<text x="${ox+OW/2}" y="26" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#BBBBBB" letter-spacing="0.5">ORIGIN</text>`;
+    s+=`<text x="${procx+PW/2}" y="26" text-anchor="middle" font-family="DM Mono,monospace" font-size="7" fill="#BBBBBB" letter-spacing="0.5">PROCESS</text>`;
 
-    // ── PROCESS COLUMN (right) — bottom to top ──
-    procNodes.forEach((n, pi) => {
-      const displayRow = procCount - 1 - pi;
-      const y = 36 + displayRow * ROW;
-
-      // ME risk colouring only for bottom (raw) and top (output) nodes
-      let fill = '#FFFFFF', stroke = '#EBEBEB', textCol = '#444444', lblCol = '#AAAAAA';
-      if (n.isBottom) {
-        const meWord = r.meLink.split(' ')[0];
-        const rs = RISK[meWord] || RISK.Negligible;
-        fill = rs.bg; stroke = rs.border; textCol = rs.color;
-      } else if (n.isTop) {
-        fill = '#EBF2FB'; stroke = '#AACBE8'; textCol = '#1F4E79';
+    // Process column (bottom to top)
+    procNodes.forEach((n,pi)=>{
+      const drow=pc-1-pi;
+      const y=32+drow*ROW;
+      const mw=r.meLink.split(' ')[0];
+      const rk=RISK[mw]||RISK.Negligible;
+      let fill='#FFFFFF',stroke='#EBEBEB',tc='#444444',lc='#AAAAAA';
+      if(n.isBot){fill=rk.bg;stroke=rk.bd;tc=rk.c;}
+      else if(n.isTop){fill='#EBF2FB';stroke='#AACBE8';tc='#1F4E79';}
+      s+=`<rect x="${procx}" y="${y}" width="${PW}" height="${CH}" rx="5" fill="${fill}" stroke="${stroke}" stroke-width="1.1"/>`;
+      if(n.label)s+=`<text x="${procx+7}" y="${y+11}" font-family="DM Mono,monospace" font-size="7" fill="${lc}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
+      if(n.num){
+        s+=`<circle cx="${procx+12}" cy="${y+28}" r="7.5" fill="#F0F2F5"/>`;
+        s+=`<text x="${procx+12}" y="${y+31.5}" font-family="DM Sans,sans-serif" font-size="7.5" fill="#777" text-anchor="middle" font-weight="600">${n.num}</text>`;
       }
-
-      svg += `<rect x="${procX}" y="${y}" width="${PROC_W}" height="${CH}"
-        rx="5" fill="${fill}" stroke="${stroke}" stroke-width="1.1"/>`;
-
-      if (n.label) {
-        svg += `<text x="${procX+8}" y="${y+11}" font-family="DM Mono,monospace"
-          font-size="7" fill="${lblCol}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
-      }
-
-      // Step circle
-      if (n.stepNum) {
-        svg += `<circle cx="${procX+13}" cy="${y+30}" r="8" fill="#F0F2F5"/>
-          <text x="${procX+13}" y="${y+33.5}" font-family="DM Sans,sans-serif"
-            font-size="7.5" fill="#777" text-anchor="middle" font-weight="600">${n.stepNum}</text>`;
-      }
-
-      const tx = n.stepNum ? procX+26 : procX+8;
-      const ty = n.label ? y+30 : y+22;
-      const [l1,l2] = wrapText(n.text, n.stepNum ? 26 : 30);
-      svg += `<text x="${tx}" y="${ty}" font-family="DM Sans,sans-serif"
-        font-size="9" fill="${textCol}" font-weight="${n.isBottom||n.isTop?'600':'400'}">${esc_svg(l1)}</text>`;
-      if (l2) svg += `<text x="${tx}" y="${ty+11}" font-family="DM Sans,sans-serif"
-        font-size="9" fill="${textCol}">${esc_svg(l2)}</text>`;
-
-      // Upward arrow to next node
-      if (displayRow > 0) {
-        const ax = procX + PROC_W/2;
-        svg += `<line x1="${ax}" y1="${y+CH+2}" x2="${ax}" y2="${y+CH+AH-6}"
-          stroke="#CCCCCC" stroke-width="1.1" marker-end="url(#arrU)"/>`;
+      const tx=n.num?procx+25:procx+7;
+      const ty=n.label?y+28:y+20;
+      const[l1,l2]=wrap(n.text,n.num?26:30);
+      s+=`<text x="${tx}" y="${ty}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}" font-weight="${n.isBot||n.isTop?'600':'400'}">${esv(l1)}</text>`;
+      if(l2)s+=`<text x="${tx}" y="${ty+11}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}">${esv(l2)}</text>`;
+      if(drow>0){
+        const ax=procx+PW/2;
+        s+=`<line x1="${ax}" y1="${y+CH+2}" x2="${ax}" y2="${y+CH+AH-6}" stroke="#CCCCCC" stroke-width="1.1" marker-end="url(#arU)"/>`;
       }
     });
 
-    // ── ORIGIN COLUMN (left) — top to bottom showing chain ──
-    // Space origin nodes evenly across the full height
-    const usableH = procCount * ROW - AH;
-    const oSpacing = usableH / Math.max(originCount - 1, 1);
-
-    originNodes.forEach((n, oi) => {
-      const y = 36 + oi * oSpacing;
-
-      let fill = '#FAFAFA', stroke = '#E8E8E8', textCol = '#555555', lblCol = '#AAAAAA';
-      if (n.isRaw) {
-        const meWord = r.meLink.split(' ')[0];
-        const rs = RISK[meWord] || RISK.Negligible;
-        fill = rs.bg; stroke = rs.border; textCol = rs.color;
-      } else if (n.isAU) {
-        fill = '#F4FAF0'; stroke = '#A9DFBF'; textCol = '#1E8449';
-      }
-
-      svg += `<rect x="${originX}" y="${y}" width="${ORIGIN_W}" height="${CH}"
-        rx="5" fill="${fill}" stroke="${stroke}" stroke-width="1.1"/>`;
-
-      if (n.label) {
-        svg += `<text x="${originX+8}" y="${y+11}" font-family="DM Mono,monospace"
-          font-size="7" fill="${lblCol}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
-      }
-
-      const [l1,l2] = wrapText(n.text, 22);
-      svg += `<text x="${originX+8}" y="${y+28}" font-family="DM Sans,sans-serif"
-        font-size="9" fill="${textCol}" font-weight="500">${esc_svg(l1)}</text>`;
-      if (l2) svg += `<text x="${originX+8}" y="${y+39}" font-family="DM Sans,sans-serif"
-        font-size="9" fill="${textCol}">${esc_svg(l2)}</text>`;
-
-      // Downward connector to next origin node
-      if (oi < originCount - 1) {
-        const cx = originX + ORIGIN_W/2;
-        svg += `<line x1="${cx}" y1="${y+CH+2}" x2="${cx}" y2="${y+oSpacing-4}"
-          stroke="#DDDDDD" stroke-width="1" stroke-dasharray="3,3"/>`;
+    // Origin column
+    const usableH=(pc-1)*ROW+CH;
+    originNodes.forEach((n,oi)=>{
+      const y=32+oi*(usableH/(oc-1));
+      const mw=r.meLink.split(' ')[0];
+      const rk=RISK[mw]||RISK.Negligible;
+      let fill='#FAFAFA',stroke='#E8E8E8',tc='#555555',lc='#AAAAAA';
+      if(n.isRaw){fill=rk.bg;stroke=rk.bd;tc=rk.c;}
+      else if(n.isAU){fill='#EAFAF1';stroke='#A9DFBF';tc='#1E8449';}
+      s+=`<rect x="${ox}" y="${y}" width="${OW}" height="${CH}" rx="5" fill="${fill}" stroke="${stroke}" stroke-width="1.1"/>`;
+      if(n.label)s+=`<text x="${ox+7}" y="${y+11}" font-family="DM Mono,monospace" font-size="7" fill="${lc}" letter-spacing="0.5">${n.label.toUpperCase()}</text>`;
+      const[l1,l2]=wrap(n.text,22);
+      s+=`<text x="${ox+7}" y="${y+26}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}" font-weight="500">${esv(l1)}</text>`;
+      if(l2)s+=`<text x="${ox+7}" y="${y+37}" font-family="DM Sans,sans-serif" font-size="9" fill="${tc}">${esv(l2)}</text>`;
+      if(oi<oc-1){
+        const nextY=32+(oi+1)*(usableH/(oc-1));
+        s+=`<line x1="${ox+OW/2}" y1="${y+CH+2}" x2="${ox+OW/2}" y2="${nextY-2}" stroke="#DDDDDD" stroke-width="1" stroke-dasharray="3,3"/>`;
       }
     });
 
-    // Horizontal connector between origin and process columns (at raw input level)
-    const rawY = 36 + (procCount-1) * ROW + CH/2;
-    svg += `<line x1="${originX+ORIGIN_W}" y1="${rawY}" x2="${procX-2}" y2="${rawY}"
-      stroke="#DDDDDD" stroke-width="1" stroke-dasharray="3,2"
-      marker-end="url(#arrD)"/>`;
+    // Horizontal connector at raw input level
+    const rawY=32+(pc-1)*ROW+CH/2;
+    s+=`<line x1="${ox+OW}" y1="${rawY}" x2="${procx-2}" y2="${rawY}" stroke="#DDDDDD" stroke-width="1" stroke-dasharray="2,2"/>`;
 
-    // Route divider (except last)
-    if (ri < routes.length - 1) {
-      const divX = panelX + PANEL_W + ROUTE_GAP/2;
-      svg += `<line x1="${divX}" y1="24" x2="${divX}" y2="${H-10}"
-        stroke="#EBEBEB" stroke-width="1"/>`;
+    // Route divider
+    if(ri<routes.length-1){
+      const dx=px+PW2+RG/2;
+      s+=`<line x1="${dx}" y1="20" x2="${dx}" y2="${H-10}" stroke="#EBEBEB" stroke-width="1"/>`;
     }
   });
 
-  svg += `</svg>`;
-  return svg;
+  s+=`</svg>`;
+  return s;
 }
 
-function wrapText(text, maxLen) {
-  if (!text) return ['', ''];
-  const words = text.split(' ');
-  let l1 = '', l2 = '';
-  for (const w of words) {
-    if (!l1 || (l1 + ' ' + w).length <= maxLen) l1 += (l1 ? ' ' : '') + w;
-    else if (!l2 || (l2 + ' ' + w).length <= maxLen) l2 += (l2 ? ' ' : '') + w;
-  }
-  return [l1, l2];
-}
-
-/* ─────────────────────────────────────────────
-   CROSS-NAVIGATION
-───────────────────────────────────────────── */
-function goMfg(mfgId) {
-  showPage('mfg', document.getElementById('nt-mfg'));
+/* ── Cross-navigation ─────────────────────────────────────── */
+function goMfg(mfgId){
+  nav('mfg',document.getElementById('nt-mfg'));
   loadMfg(mfgId);
 }
-
-function goProduct(name) {
-  showPage('register', document.getElementById('nt-register'));
-  const p = PRODUCTS.find(x => x.name === name);
-  if (!p) return;
-  // Open the zone
-  const zb = document.getElementById('zb-' + p.zone);
-  const zch = document.getElementById('zch-' + p.zone);
-  if (zb) { zb.classList.add('open'); zch.classList.add('open'); }
-  setTimeout(() => {
-    const card = document.getElementById('card-' + esc(p.id));
-    if (card) {
-      const cd = document.getElementById('cd-' + esc(p.id));
-      if (!cd.classList.contains('open')) toggleCard(p.id, card);
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+function goProduct(name){
+  nav('register',document.getElementById('nt-register'));
+  const p=PRODUCTS.find(x=>x.name===name);
+  if(!p)return;
+  const zb=document.getElementById('zb-'+p.zone);
+  const zch=document.getElementById('zch-'+p.zone);
+  if(zb){zb.classList.add('open');zch.classList.add('open');}
+  setTimeout(()=>{
+    const card=document.getElementById('card-'+esc(p.id));
+    if(card){
+      const cx=document.getElementById('cx-'+esc(p.id));
+      if(!cx.classList.contains('open'))toggleCard(p.id,card);
+      card.scrollIntoView({behavior:'smooth',block:'center'});
     }
-  }, 120);
+  },120);
 }
-
-/* ─────────────────────────────────────────────
-   UTILS
-───────────────────────────────────────────── */
-function esc(s) { return (s || '').replace(/\./g, '_').replace(/[^a-zA-Z0-9_-]/g, ''); }
-function esc_svg(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 </script>
+
 </body>
 </html>
